@@ -1,0 +1,135 @@
+#geral {
+    background-color: rgb(74, 67, 138);
+    height: 100%;
+    width: 3600px;
+    box-sizing: border-box;
+    color: white;
+}
+
+#upload{
+    height: 40px;
+    width: 250px;
+    background-color: chocolate;
+    font-size: xx-large;
+}
+
+h1 {
+    text-align: center;
+}
+
+.content-wrapper {
+    display: flex;
+    width: 3600px;
+    background-color: rgb(198, 199, 143);
+}
+
+#jsonForm {
+    background-color: rgb(198, 199, 143);
+    padding: 20px;
+    box-sizing: border-box;
+    margin-right: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Permite que as divs internas quebrem linha */
+    gap: 10px; /* Espaço entre as divs */
+    height: 1200px;
+    width: 100%;
+    justify-content: space-around;
+}
+
+#bancoDados {
+    width: 70%;
+    height: 500px;
+    background-color: rgb(13, 158, 105);
+    padding: 10px;
+}
+
+#idInput {
+    width: 75%;
+    height: 30px;
+    background-color: rgb(63, 206, 211);
+}
+
+#buscarBotao{
+    width: 160px;
+    height: 34px;
+    margin-top: px;
+    background-color: rgb(63, 206, 211);
+}
+
+#descricao{
+    margin: 4px 5px 4px;
+    height: 30px;
+    resize: none;
+    width: 25%;
+    transition: width 0.3s, height 0.3s; /* Transição suave de tamanho */
+}
+
+#descricao:hover {
+    width: 400px; /* Largura ao passar o mouse */
+    height: 200px; /* Altura ao passar o mouse */
+}
+
+/* Estilo para o contêiner das caixas */
+#cabecalho {
+    display: flex; /* Usa flexbox para alinhar as caixas lado a lado */
+    border: 1px solid black; /* Borda ao redor do contêiner */
+    padding: 10px; /* Espaçamento interno ao redor das caixas */
+    background-color: #5f3737; /* Cor de fundo do contêiner (opcional) */
+    gap: 10px; /* Espaço entre as caixas */
+    
+}
+
+/* Estilo para cada caixa */
+.caixas {
+    border: 1px solid black; /* Borda preta ao redor de cada caixa */
+    padding: 20px; /* Espaçamento interno dentro de cada caixa */
+    background-color: rgb(116, 121, 187); /* Cor de fundo de cada caixa */
+    flex: 1; /* Faz com que as caixas ocupem a mesma largura disponível */
+    text-align: center; /* Alinha o texto no centro da caixa */
+    box-sizing: border-box; /* Inclui a borda e o padding no tamanho total da caixa */
+}
+
+/* Estilo para o texto dentro das caixas */
+.caixas h2 {
+    margin: 0; /* Remove a margem padrão do h2 */
+    font-size: 16px; /* Tamanho da fonte do texto */
+    color: black; /* Cor do texto */
+}
+
+#carousel{
+    height: 100%;
+    width: 100%;
+}
+
+.swipper{
+    margin-left: 600px;
+    background-color: rgb(241, 217, 148);
+    height: 500px;
+    width: 600px;
+}
+
+h2{
+    color: black;
+    margin-left: 100px;
+    margin-top: 50px;
+}
+
+.form2{
+    background-color: cadetblue;
+    width: 100%;
+    display: inline-block;
+}
+
+#botaoCards{
+    margin-left: 400px;
+    margin-top: 20px;
+    padding: 5px 10px;
+}
+
+.swiper-button-next{
+    margin-right: 400px;
+}
+
+.swiper-button-prev{
+    margin-left: 400px;
+}

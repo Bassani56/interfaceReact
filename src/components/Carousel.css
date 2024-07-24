@@ -1,0 +1,59 @@
+#h2{
+    font-size: xx-large;
+    margin-left: 80px;
+    margin-bottom: 20px;
+}
+
+#h2Id{
+    font-size: xx-large;
+    margin-left: 80px;
+    margin-bottom: 40px;
+}
+
+#bancoDados {
+    width: 1200px;
+    height: 610px;
+    background-color: rgb(65, 102, 88);
+    padding: 10px;
+}
+
+#menuDados{
+    background-color: rgb(124, 67, 67);
+    height: 490px;
+}
+
+/* VerticalCarousel.css */
+.menu {
+    display: flex; /* Define display flex para alinhar itens em linha */
+    justify-content: space-around; /* Espaça igualmente os itens */
+    flex-wrap: wrap; /* Permite que os itens quebrem linha se necessário */
+    height: 500px;
+    background-color: rgb(65, 42, 42);
+}
+  
+  .campos {
+    flex: 1; /* Faz com que cada div ocupe o mesmo espaço */
+    padding: 10px;
+    background-color: rgb(121, 113, 133);
+    text-align: center; /* Centraliza o texto horizontalmente */
+    border: 1px solid #000; /* Adiciona borda preta */
+    height: 62px;
+    font-size: large;
+    width: 33%;
+  }
+  
+  .card{
+   height: 100%;
+   width: 100%; 
+   font-size: x-large;
+  }
+
+#botao {
+    border: 0.1px solid rgb(0, 0, 0);
+    background-color: rgb(121, 113, 133);;
+    padding: 10px;
+    height: 62px;
+    font-size: large;
+    width: 33%;
+    height: 84px;
+}

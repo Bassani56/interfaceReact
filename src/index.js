@@ -1,17 +1,25 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from 'react-dom/client'; // Importa o ReactDOM diretamente do pacote 'react-dom/client'
+
+import App from './App'; // Importa o componente principal App
+import reportWebVitals from './reportWebVitals'; // Importa a função para reportar métricas web
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <div id="geral">
+      <App />
+    </div>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+
+
+/*O arquivo index.js configura o ponto de entrada da sua aplicação React, 
+onde o componente App é montado dentro do root, utilizando 
+ReactDOM.createRoot para suportar as novas funcionalidades do React 18.
+Além disso, React.StrictMode é utilizado para garantir melhores práticas 
+de desenvolvimento, enquanto reportWebVitals oferece insights sobre o 
+desempenho da sua aplicação.*/
