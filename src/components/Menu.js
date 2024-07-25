@@ -24,7 +24,7 @@ const VerticalMenu = ({onClickRow}) => {
 
   const handleItemClick = (event, value) => {
     event.preventDefault(); // Evita a atualização da página
-    //console.log('Valor do botão clicado:', value);
+    console.log('Valor do botão clicado:', value);
     
     onClickRow(value)
   };

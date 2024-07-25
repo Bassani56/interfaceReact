@@ -3,6 +3,7 @@ import './site.css'
 import { buscarElemento, updateElemento, inserirElemento } from "./utils";
 import VerticalMenu from "../components/Menu";
 import React, { useRef, useEffect, useState } from "react";
+import DataTableComponent from '../datatable/DataTableComponent';
 
 const Site = () => {
     const [showCarousel, setShowCarousel] = useState(false);
@@ -35,13 +36,12 @@ const Site = () => {
                         <button id="botaoProcessar" type="button">Processar</button>
                     </div>
         
-                    <div id="bancoDados">
+                    {/* <div id="bancoDados">
                         <input type="text" id="idInput"/>
                         <button id="buscarBotao" type="button" onClick={buscarElemento}>Buscar no Supabase</button>
                         
                         <div id='cabecalho'>
                             <div className='caixas'><h2>acc_class</h2></div>
-                            {/* <div className='caixas'><h2>action_class</h2></div> */}
                             <div className='caixas'><h2>total_value</h2></div>
                             <div className='caixas'><h2>ind_dc</h2></div>
                         </div>
@@ -51,8 +51,13 @@ const Site = () => {
                                 setShowCarousel(true);
                                 setTargetValue(value);
                             }}/>
+                            
                         </div>
-                    </div>
+                    </div> */}
+                    <DataTableComponent onClickRow={(value) => {
+                                setShowCarousel(true);
+                                setTargetValue(value);
+                    }}/>
         
                     <div id="conteudoJson">
                         <label htmlFor="conteudoLabel"><br /> Conteúdo Json:</label><br />

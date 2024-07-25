@@ -1,0 +1,10 @@
+#position{
+    color: brown;
+    background-color: black;
+}
+
+.datatable-container{
+    background-color: rgb(230, 217, 217);
+    width: 1200px;
+    height: 600px;
+}
