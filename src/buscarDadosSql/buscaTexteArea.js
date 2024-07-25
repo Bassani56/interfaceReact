@@ -1,11 +1,59 @@
-export const getTextAreaValue = (card_id) => {
-    const textarea = document.getElementById(`textarea-${card_id}`);
-    if (textarea) {
-      return textarea.value;
-    } else {
-      console.warn(`Textarea with id textarea-${card_id} not found`);
-      return null;
+import React, { useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import '../components/Carousel.css'
+import { getAccountingSummary } from './buscaFunctionSql'; // Ajuste o caminho aqui
+
+const VerticalMenu = ({onClickRow}) => {
+  const [jsonItems, setJsonItems] = useState([]);
+
+  const handleButtonClick = async (event) => {
+    event.preventDefault(); // Evita a atualização da página
+    try {
+      const accountingData = await getAccountingSummary();
+      console.log('Resumo Contábil:', accountingData);
+      setJsonItems(accountingData); // Atualiza o estado com os dados obtidos
+      
+    } catch (error) {
+      console.error('Erro ao buscar resumo contábil:', error);
     }
+  };//acc_class
+
+  const handleItemClick = (event, value) => {
+    event.preventDefault(); // Evita a atualização da página
+    //console.log('Valor do botão clicado:', value);
+    
+    onClickRow(value)
+  };
+
+  return (
+    <div>
+      <button onClick={handleButtonClick}>Buscar Resumo</button>
+      
+      <Swiper
+        direction="vertical"
+        spaceBetween={1}
+        slidesPerView={6}
+        
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        style={{ width: '100%', height: '480px' }}
+      >
+        {jsonItems.map((item, index) => (
+          <SwiperSlide key={index} style={{ height: '80px', borderBottom: '1px solid #000' }}>
+            <div className='menu'> 
+              <button id='botao' onClick={(event) => handleItemClick(event, item.acc_class)}>{item.acc_class}</button>
+              <div className='campos'>"{item.total_value}"</div>
+              <div className='campos'>"{item.ind_dc}"</div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+  );
 };
 
-//Buscar uma maneira de acessar o textearea e buscar o card_id por lá, esta é a pira talkei 
+export default VerticalMenu;

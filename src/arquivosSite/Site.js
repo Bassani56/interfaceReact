@@ -1,5 +1,5 @@
 import Carousel from '../components/Carousel';
-import './site.css'
+// import './site.css'
 import { buscarElemento, updateElemento, inserirElemento } from "./utils";
 import VerticalMenu from "../components/Menu";
 import React, { useRef, useEffect, useState } from "react";
@@ -42,6 +42,7 @@ const Site = () => {
                         
                         <div id='cabecalho'>
                             <div className='caixas'><h2>acc_class</h2></div>
+                            
                             <div className='caixas'><h2>total_value</h2></div>
                             <div className='caixas'><h2>ind_dc</h2></div>
                         </div>
@@ -51,12 +52,12 @@ const Site = () => {
                                 setShowCarousel(true);
                                 setTargetValue(value);
                             }}/>
-                            
                         </div>
                     </div> */}
+
                     <DataTableComponent onClickRow={(value) => {
-                                setShowCarousel(true);
-                                setTargetValue(value);
+                            setShowCarousel(true);
+                            setTargetValue(value);
                     }}/>
         
                     <div id="conteudoJson">

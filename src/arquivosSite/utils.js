@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { getTextAreaValue } from '../buscarDadosSql/buscaTexteArea';
+import getTextAreaValue from '../buscarDadosSql/buscaTexteArea';
 
 const url = process.env.REACT_APP_SUPABASE_URL;
 const key = process.env.REACT_APP_SUPABASE_KEY;

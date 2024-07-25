@@ -14,17 +14,17 @@ const VerticalMenu = ({onClickRow}) => {
     event.preventDefault(); // Evita a atualização da página
     try {
       const accountingData = await getAccountingSummary();
-      // console.log('Resumo Contábil:', accountingData);
+      console.log('Resumo Contábil:', accountingData);
       setJsonItems(accountingData); // Atualiza o estado com os dados obtidos
       
     } catch (error) {
       console.error('Erro ao buscar resumo contábil:', error);
     }
-  };
+  };//acc_class
 
   const handleItemClick = (event, value) => {
     event.preventDefault(); // Evita a atualização da página
-    console.log('Valor do botão clicado:', value);
+    //console.log('Valor do botão clicado:', value);
     
     onClickRow(value)
   };
