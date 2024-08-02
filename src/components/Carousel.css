@@ -57,3 +57,57 @@
     width: 33%;
     height: 84px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            position: -webkit-sticky; 
+            position: sticky;
+            top: 0;
+            width: 100%;
+            height: 30px;
+            background-color: #333;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: calc(100vh - 30px); 
+        }
+        .left-column {
+            width: 100%;
+            background-color: #f4f4f4;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .right-column {
+            width: 100%;
+            background-color: #e9e9e9;
+            padding: 10px;
+            box-sizing: border-box;
+        }

@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals'; // Importa a função para repo
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <div id="geral">
+    <div id="">
       <App />
     </div>
   </React.StrictMode>

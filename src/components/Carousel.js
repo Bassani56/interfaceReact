@@ -1,4 +1,4 @@
-import React, { useRef,useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -13,38 +13,27 @@ const Carousel = ({ targetValue }) => {
   const [specificCardIds, setSpecificCardIds] = useState([]);
   const [texts, setTexts] = useState({});
   const [structData, setStructData] = useState({});
-
-  // Função para buscar dados quando o componente é montado
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const accountingData = await getAccountingSummary();
-        // Filtrar o item com base em total_value e obter card_ids
-        const targetItem = accountingData.find(item => item.action_class === targetValue);
-
-        if (targetItem) {
-          setSpecificCardIds(targetItem.card_ids || []);
-          console.log("Card IDs específicos:", targetItem.card_ids);
-        } else {
-          console.log("Nenhum item encontrado com o acc_class:", targetValue);
-        }
-      } catch (error) {
-        console.error('Erro ao buscar resumo contábil:', error);
-      }
-    };
-
-    fetchData();
-  }, [targetValue]); // Executa toda vez que mudar o targetValue - atualiza o carousel com os ids
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [swiperInstance, setSwiperInstance] = useState(null);
 
   useEffect(() => {
-    if (specificCardIds.length > 0) {
+    setSpecificCardIds(targetValue);
+  }, [targetValue]);
+
+  useEffect(() => {
+    if(specificCardIds.length > 0){
       const atualizar = async () => {
         await buscaStruct(specificCardIds);
       };
-
+      
       atualizar();
     }
-  }, [specificCardIds]);
+
+    if (swiperInstance) {
+      swiperInstance.slideTo(0); // Navega para o primeiro slide
+    }
+    
+  }, [specificCardIds, swiperInstance]);
 
   const buscaStruct = async (specificCardIds) => {
     try {
@@ -56,13 +45,18 @@ const Carousel = ({ targetValue }) => {
       if (error) {
         console.error(`Erro ao executar a query:`, error);
       } else {
-        
         const newStructData = {};
         data.forEach(item => {
           newStructData[item.card_id] = JSON.stringify(item.struct, null, 2);
         });
-        console.log("newStructData: ", newStructData);
-        setStructData(newStructData);
+        // Ordena structData de acordo com a ordem de specificCardIds
+        const orderedStructData = specificCardIds.reduce((acc, id) => {
+          if (newStructData[id]) {
+            acc[id] = newStructData[id];
+          }
+          return acc;
+        }, {});
+        setStructData(orderedStructData);
       }
     } catch (error) {
       console.error(`Erro ao executar a query:`, error);
@@ -74,9 +68,8 @@ const Carousel = ({ targetValue }) => {
       ...prevTexts,
       [id]: event.target.value
     }));
+    
   };
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleSlideChange = (swiper) => {
     setCurrentIndex(swiper.activeIndex);
@@ -86,6 +79,7 @@ const Carousel = ({ targetValue }) => {
     <div className='swiper'>
       <div className="swiper-button-prev">{"<"}</div>
       <Swiper
+        onSwiper={(swiper) => setSwiperInstance(swiper)}
         modules={[Navigation]} // Usando o módulo de navegação
         spaceBetween={50}
         slidesPerView={1}
@@ -98,22 +92,40 @@ const Carousel = ({ targetValue }) => {
         style={{ width: '800px', height: '900px' }}
         onSlideChange={handleSlideChange} // Evento para mudança de slide
       >
-        {specificCardIds.map((id, index) => (
-          <SwiperSlide key={index}>
-            <div>
-              <h2>Slide : {index + 1} / {specificCardIds.length}</h2>
-              <div style={{ fontSize: 'x-large', color: 'black' }} id='cardId'>{specificCardIds[currentIndex]}</div>
-            </div>
-            <textarea
-              id={`textarea-${id}`}
-              className="card"
-              value={structData[id] || ''}
-              onChange={(e) => handleChange(id, e)}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        {
+          Object.keys(structData).map((key, index) => (
+            <SwiperSlide key={index}>
+              <div>
+                <h2 style={{marginTop:'1px'}}>Slide: {index + 1} / {Object.keys(structData).length} </h2>
+                <label style={{ fontSize: 'x-large', color: 'black'}} id='cardId'>
+                  {specificCardIds[index]}      
+                </label>
+              </div>
 
+              <div
+                  id={`textarea-${specificCardIds[index]}`}
+                  contentEditable
+                  onInput={(e) => handleChange(specificCardIds[index], e)}
+                  style={{
+                      marginTop: '40px',
+                      border: '1px solid #ccc',
+                      padding: '10px',
+                      marginLeft: '20px',
+                      maxWidth: '700px',
+                      minHeight: '400px',
+                      maxHeight: '100%', // Define a altura máxima para garantir que a rolagem apareça quando necessário
+                      width: '100%',
+                      overflowY: 'auto', // Habilita a rolagem vertical
+                      outline: 'none',
+                      whiteSpace: 'pre-wrap', // Preserve whitespace and line breaks
+                      boxSizing: 'border-box' // Inclui padding e border no cálculo da altura e largura total
+                  }}
+                  dangerouslySetInnerHTML={{ __html: texts[specificCardIds[index]] || structData[specificCardIds[index]] || '' }} // Use for initial content
+              ></div>
+            </SwiperSlide>
+          ))
+        }
+      </Swiper>
       <div className="swiper-button-next">{">"}</div>
     </div>
   );

@@ -1,28 +1,30 @@
 import Carousel from '../components/Carousel';
-// import './site.css'
+
 import { buscarElemento, updateElemento, inserirElemento } from "./utils";
-import VerticalMenu from "../components/Menu";
-import React, { useRef, useEffect, useState } from "react";
-import DataTableComponent from '../datatable/DataTableComponent';
+
+import React, {useState } from "react";
+
+import { Teste } from '../PivotTable/Teste';
 
 const Site = () => {
     const [showCarousel, setShowCarousel] = useState(false);
     const [valorBotao, setTargetValue] = useState(null);
+    const [byid, setByid] = useState(null)
+
+    if(byid){
+        console.log('byid: ',byid)
+    }
 
     const atualizarElemento = async (someById, someId, boolean) => {
-        console.log("ById: ",someById, "    id: ",someId, "    valor: ", boolean);
+        console.log("ById: ", someById, "    id: ", someId, "    valor: ", boolean);
         const result = await updateElemento({ ById: someById, id: someId, valor: boolean });
         
-        // if (inputRef.current) {
-        //     const conteudo = inputRef.current.value;
-        //     console.log('Conteúdo:', conteudo);
-        //  };
-        // try {
-        //     console.log(someById)
-            
-        // } catch (error) {
-        //   console.error('Erro ao atualizar elemento:', error);
-        // }
+        // Verificar resultado da atualização
+        if (result) {
+            window.alert('Atualização realizada com sucesso');
+        } else {
+            console.log('Falha na atualização');
+        }
     };
     
     return(
@@ -36,30 +38,24 @@ const Site = () => {
                         <button id="botaoProcessar" type="button">Processar</button>
                     </div>
         
-                    {/* <div id="bancoDados">
+                    <div id="bancoDados"    style={{
+                      minHeight: '100px',
+                      maxHeight: '100%', // Define a altura máxima para garantir que a rolagem apareça quando necessário
+                      width: '100%',
+                      overflowY: 'auto', // Habilita a rolagem vertical
+                      outline: 'none',
+                      whiteSpace: 'pre-wrap', // Preserve whitespace and line breaks
+                      boxSizing: 'border-box' // Inclui padding e border no cálculo da altura e largura total
+                    }}>
                         <input type="text" id="idInput"/>
                         <button id="buscarBotao" type="button" onClick={buscarElemento}>Buscar no Supabase</button>
-                        
-                        <div id='cabecalho'>
-                            <div className='caixas'><h2>acc_class</h2></div>
-                            
-                            <div className='caixas'><h2>total_value</h2></div>
-                            <div className='caixas'><h2>ind_dc</h2></div>
-                        </div>
-                        
-                        <div id="menuDados">
-                            <VerticalMenu onClickRow={(value) => {
-                                setShowCarousel(true);
-                                setTargetValue(value);
-                            }}/>
-                        </div>
-                    </div> */}
-
-                    <DataTableComponent onClickRow={(value) => {
+                        <Teste onClickRow={(value) => {
                             setShowCarousel(true);
                             setTargetValue(value);
-                    }}/>
-        
+                    }} />
+                        
+                    </div>
+
                     <div id="conteudoJson">
                         <label htmlFor="conteudoLabel"><br /> Conteúdo Json:</label><br />
                         <textarea id="jsonInput" name="json" rows="32" cols="50" ></textarea><br />
@@ -76,10 +72,10 @@ const Site = () => {
                 <div className='form2'>
                     <div id="carousel">
                         <h1>Cards: </h1>
-                        {showCarousel && <Carousel targetValue={valorBotao} />} {/* Passar jsonItems como prop para o Carousel */}
+                        {showCarousel && <Carousel targetValue={valorBotao}  />} {/* Passar jsonItems como prop para o Carousel */}
                         
                         <button id='botaoCards' type="button" onClick={() => atualizarElemento('card', document.getElementById('cardId').innerHTML, true)} >Update JSON</button>
-                
+                        
                     </div>
                 
                 </div>            

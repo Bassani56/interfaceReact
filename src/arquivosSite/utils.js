@@ -1,11 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
-import getTextAreaValue from '../buscarDadosSql/buscaTexteArea';
-
-const url = process.env.REACT_APP_SUPABASE_URL;
-const key = process.env.REACT_APP_SUPABASE_KEY;
-
-// Cria o cliente Supabase
-const supabase = createClient(url, key);
+import { supabase } from '../supabaseClient';
+import { getTextAreaValue } from '../buscarDadosSql/buscaTexteArea';
 
 // Função para buscar dados da tabela "cardsn"
 async function fetchData(id) {
@@ -56,8 +50,8 @@ async function buscarElemento() {
 }
 
 // Função para validar JSON
-function validarJson() {
-  var jsonInput = document.getElementById('jsonInput').value;
+function validarJson(ById) {
+  var jsonInput = document.getElementById(ById).value;
   console.log(jsonInput);
 
   try {
@@ -84,7 +78,7 @@ async function inserirElemento() {
     const cardId = `${year}.${month}.${day}.${hours}.${minutes}.${seconds}`;
 
     // Validação do JSON
-    validarJson(); // Certifique-se de implementar a função validarJson() corretamente
+    validarJson('jsonInput'); // Certifique-se de implementar a função validarJson() corretamente
     let newContent = document.getElementById('jsonInput').value.trim();
 
     if (!newContent) {
@@ -126,60 +120,54 @@ async function inserirElemento() {
 }
 
 async function updateElemento({ ById, id, valor }) {
-    let newContent;
-    let userId = id;
-    if(!valor){
-      newContent = document.getElementById(ById).value;
-    }
-  
-    if(valor){
-      newContent = getTextAreaValue(id);
+  let newContent;
+  let userId = id;
+  if(!valor){
+    newContent = document.getElementById(ById).value;
+  }
 
-    }
+  if(valor){
+    newContent = getTextAreaValue(id);
+  }
 
-    if (!newContent) {
-      window.alert('Conteúdo JSON não pode estar vazio!');
-      return false;
-    }
-  
-    try {
-      newContent = JSON.parse(newContent);
-    } catch (e) {
-      window.alert('Conteúdo inválido! Certifique-se de inserir um JSON válido.');
-      console.error('Erro ao parsear JSON:', e.message);
-      return false;
-    }
-  
-    console.log('Tentando atualizar dados para o ID:', userId);
-    console.log('Novo conteúdo:', newContent);
-  
-    try {
-      const { data, error } = await supabase
-        .from('cardsn')
-        .update({ struct: newContent })
-        .eq('card_id', userId)
-        .select(); // Adiciona a seleção para obter os dados atualizados
-  
-      if (error) {
-        console.error('Erro ao atualizar dados:', error);
-        window.alert('Erro ao atualizar dados: ' + error.message);
-        return false;
-      }
-  
-      console.log('Dados atualizados com sucesso:', data);
-      if (data && data.length > 0) {
-        window.alert('Dados atualizados com sucesso!');
-        return true;
-      } else {
-        console.log('Nenhum dado encontrado para o ID:', userId);
-        window.alert('Nenhum dado encontrado para o ID: ' + userId);
-        return false;
-      }
-    } catch (error) {
-      console.error('Erro ao atualizar dados:', error.message);
+  if (!newContent) {
+    window.alert('Conteúdo JSON não pode estar vazio!');
+    return false;
+  }
+
+  try {
+    newContent = JSON.parse(newContent);
+  } catch (e) {
+    window.alert('Conteúdo inválido! Certifique-se de inserir um JSON válido.');
+    console.error('Erro ao parsear JSON:', e.message);
+    return false;
+  }
+
+  console.log('Tentando atualizar dados para o ID:', userId);
+  console.log('Novo conteúdo:', newContent);
+
+  try {
+    const { error } = await supabase
+      .from('cardsn')
+      .update({ struct: newContent })
+      .eq('card_id', userId)
+       // Adiciona a seleção para obter os dados atualizados
+
+    if (error) {
+      console.error('Erro ao atualizar dados:', error);
       window.alert('Erro ao atualizar dados: ' + error.message);
       return false;
     }
+    else{
+      return true;
+    }
+
+    
+  } catch (error) {
+    console.error('Erro ao atualizar dados:', error.message);
+    window.alert('Erro ao atualizar dados: ' + error.message);
+    return false;
+  }
 }
   
 async function processarEmail() {

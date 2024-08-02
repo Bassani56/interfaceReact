@@ -3,11 +3,13 @@ import React from 'react';
 
 import {Site} from './arquivosSite/Site'
 
+import { Teste } from './PivotTable/Teste';
+
 const App = () => {
   return (
     <div className="App">
-      <Site />
-      
+      {/* <Site /> */}
+      <Teste/>
     </div>
   );
 };
