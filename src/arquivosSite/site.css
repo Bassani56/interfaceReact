@@ -1,3 +1,4 @@
+site.css
 #geral {
     background-color: rgb(74, 67, 138);
     height: 100%;
@@ -34,13 +35,6 @@ h1 {
     height: 1200px;
     width: 100%;
     justify-content: space-around;
-}
-
-#bancoDados {
-    width: 70%;
-    height: 500px;
-    background-color: rgb(13, 158, 105);
-    padding: 10px;
 }
 
 #idInput {
@@ -106,6 +100,7 @@ h1 {
     background-color: rgb(241, 217, 148);
     height: 500px;
     width: 600px;
+    display: inline-flex;
 }
 
 h2{
@@ -127,9 +122,9 @@ h2{
 }
 
 .swiper-button-next{
-    margin-right: 400px;
+    margin-right: 10%;
 }
 
 .swiper-button-prev{
-    margin-left: 400px;
+    margin-left: 4%;
 }
