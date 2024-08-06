@@ -1,5 +1,5 @@
 import { supabase } from '../supabaseClient';
-import { getTextAreaValue } from '../buscarDadosSql/buscaTexteArea';
+import {getTextAreaValue} from '../buscarDadosSql/buscaTexteArea'
 
 // Função para buscar dados da tabela "cardsn"
 async function fetchData(id) {
@@ -27,7 +27,7 @@ async function fetchData(id) {
 
 async function buscarElemento() {
   var userId = document.getElementById('idInput').value; // Obtém o ID do usuário
-
+  
   try {
     const json_text = await fetchData(userId);
     // console.log(json_text);
@@ -35,6 +35,7 @@ async function buscarElemento() {
       const jsonInputElement = document.getElementById("jsonInput");
       const modeloInputElement = document.getElementById("modeloInput");
 
+      console.log("jsonInputElement: ", jsonInputElement)
       if (jsonInputElement && modeloInputElement) {
         jsonInputElement.value = json_text; // Preenche a textarea com o JSON recuperado
         modeloInputElement.value = json_text; // Preenche a textarea original com o JSON recuperado

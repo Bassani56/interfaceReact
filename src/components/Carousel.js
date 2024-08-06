@@ -9,7 +9,7 @@ import { getAccountingSummary } from '../buscarDadosSql/buscaFunctionSql'; // Aj
 import { Navigation } from 'swiper/modules'; // Importação corrigida
 import { supabase } from '../supabaseClient';
 
-const Carousel = ({ targetValue }) => {
+const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
   const [specificCardIds, setSpecificCardIds] = useState([]);
   const [texts, setTexts] = useState({});
   const [structData, setStructData] = useState({});
@@ -18,10 +18,8 @@ const Carousel = ({ targetValue }) => {
 
   useEffect(() => {
     setSpecificCardIds(targetValue);
-  }, [targetValue]);
-
-  useEffect(() => {
-    if(specificCardIds.length > 0){
+    if(specificCardIds.length > 0 ){
+      setBusca(true)
       const atualizar = async () => {
         await buscaStruct(specificCardIds);
       };
@@ -33,7 +31,7 @@ const Carousel = ({ targetValue }) => {
       swiperInstance.slideTo(0); // Navega para o primeiro slide
     }
     
-  }, [specificCardIds, swiperInstance]);
+  }, [specificCardIds, swiperInstance, targetValue]);
 
   const buscaStruct = async (specificCardIds) => {
     try {
@@ -75,58 +73,71 @@ const Carousel = ({ targetValue }) => {
     setCurrentIndex(swiper.activeIndex);
   };
 
+  
   return (
     <div className='swiper'>
-      <div className="swiper-button-prev">{"<"}</div>
-      <Swiper
-        onSwiper={(swiper) => setSwiperInstance(swiper)}
-        modules={[Navigation]} // Usando o módulo de navegação
-        spaceBetween={50}
-        slidesPerView={1}
-        navigation={{
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }}
-        pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
-        style={{ width: '800px', height: '900px' }}
-        onSlideChange={handleSlideChange} // Evento para mudança de slide
-      >
-        {
-          Object.keys(structData).map((key, index) => (
-            <SwiperSlide key={index}>
+      {mostrarCarousel && !targetValue && <p id='mensagem'>Clique na tabela para pesquisar por Cards Específicos</p>}
+      {mostrarCarousel ? (
+            
               <div>
-                <h2 style={{marginTop:'1px'}}>Slide: {index + 1} / {Object.keys(structData).length} </h2>
-                <label style={{ fontSize: 'x-large', color: 'black'}} id='cardId'>
-                  {specificCardIds[index]}      
-                </label>
+                  <div className="swiper-button-prev">{"<"}</div>
+                  
+                  <Swiper
+                    onSwiper={(swiper) => setSwiperInstance(swiper)}
+                    modules={[Navigation]} // Usando o módulo de navegação
+                    spaceBetween={50}
+                    slidesPerView={1}
+                    navigation={{
+                      nextEl: '.swiper-button-next',
+                      prevEl: '.swiper-button-prev',
+                    }}
+                    pagination={{ clickable: true }}
+                    scrollbar={{ draggable: true }}
+                    style={{ width: '800px', height: '900px' }}
+                    onSlideChange={handleSlideChange} // Evento para mudança de slide
+                  >
+                    {
+                      Object.keys(structData).map((key, index) => (
+                        <SwiperSlide key={index}>
+                          <div>
+                            <h2 style={{marginTop:'1px'}}>Slide: {index + 1} / {Object.keys(structData).length} </h2>
+                            <label style={{ fontSize: 'x-large', color: 'black'}} id='cardId'>
+                              {specificCardIds[index]}      
+                            </label>
+                          </div>
+                          
+                          <div
+                              id={`textarea-${specificCardIds[index]}`}
+                              contentEditable
+                              onInput={(e) => handleChange(specificCardIds[index], e)}
+                              style={{
+                                  marginTop: '40px',
+                                  border: '1px solid #ccc',
+                                  padding: '10px',
+                                  marginLeft: '20px',
+                                  maxWidth: '700px',
+                                  minHeight: '400px',
+                                  maxHeight: '100%', // Define a altura máxima para garantir que a rolagem apareça quando necessário
+                                  width: '100%',
+                                  overflowY: 'auto', // Habilita a rolagem vertical
+                                  outline: 'none',
+                                  whiteSpace: 'pre-wrap', // Preserve whitespace and line breaks
+                                  boxSizing: 'border-box' // Inclui padding e border no cálculo da altura e largura total
+                              }}
+                              dangerouslySetInnerHTML={{ __html: texts[specificCardIds[index]] || structData[specificCardIds[index]] || '' }} // Use for initial content
+                          ></div>
+                        </SwiperSlide>
+                      ))
+                    }
+                  </Swiper>
+                  <div className="swiper-button-next">{">"}</div>
               </div>
+            
+        ) : (
+            <div>Tabela Cards esta oculta</div>
+        )}
 
-              <div
-                  id={`textarea-${specificCardIds[index]}`}
-                  contentEditable
-                  onInput={(e) => handleChange(specificCardIds[index], e)}
-                  style={{
-                      marginTop: '40px',
-                      border: '1px solid #ccc',
-                      padding: '10px',
-                      marginLeft: '20px',
-                      maxWidth: '700px',
-                      minHeight: '400px',
-                      maxHeight: '100%', // Define a altura máxima para garantir que a rolagem apareça quando necessário
-                      width: '100%',
-                      overflowY: 'auto', // Habilita a rolagem vertical
-                      outline: 'none',
-                      whiteSpace: 'pre-wrap', // Preserve whitespace and line breaks
-                      boxSizing: 'border-box' // Inclui padding e border no cálculo da altura e largura total
-                  }}
-                  dangerouslySetInnerHTML={{ __html: texts[specificCardIds[index]] || structData[specificCardIds[index]] || '' }} // Use for initial content
-              ></div>
-            </SwiperSlide>
-          ))
-        }
-      </Swiper>
-      <div className="swiper-button-next">{">"}</div>
+      
     </div>
   );
 };

@@ -15,4 +15,3 @@ const getAccountingSummary = async () => {
 };
 
 export { getAccountingSummary };
-

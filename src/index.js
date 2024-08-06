@@ -1,19 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client'; // Importa o ReactDOM diretamente do pacote 'react-dom/client'
+import ReactDOM from 'react-dom/client'; // Importa ReactDOM diretamente do pacote 'react-dom/client'
 
-import App from './App'; // Importa o componente principal App
+import { App } from './App'; // Importa o componente principal App
 import reportWebVitals from './reportWebVitals'; // Importa a função para reportar métricas web
 
+// Cria a raiz do React no elemento com id 'root'
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Renderiza o componente App dentro do StrictMode
 root.render(
   <React.StrictMode>
-    <div id="">
-      <App />
-    </div>
+    <App />
   </React.StrictMode>
 );
 
+// Relata as métricas web
 reportWebVitals();
+
+
 
 
 

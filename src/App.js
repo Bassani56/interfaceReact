@@ -1,17 +1,76 @@
-// src/App.js
-import React from 'react';
-
-import {Site} from './arquivosSite/Site'
-
-import { Teste } from './PivotTable/Teste';
+import React, { useState } from 'react';
+import { Teste } from './PivotTable/Teste'; // Ajuste o caminho conforme necessário
 
 const App = () => {
+  const [selectedOptionMos, setSelectedOptionMos] = useState('');
+  const [selectedOptionOcul, setSelectedOptionUcul] = useState('');
+  const [mostrarTabela, setMostrarTabela] = useState(true);
+  const [mostrarCarousel, setMostrarCarousel] = useState(true);
+  const [modeloJson, setModeloJson] = useState(true);
+  const [conteudoJson, setConteudoJson] = useState(false);
+  const [dados, setDados] = useState(false);
+
+  const handleChange = (event, boolean) => {
+    const value = event.target.value;
+    if(boolean){setSelectedOptionMos(value); setSelectedOptionUcul('')}
+    else{setSelectedOptionUcul(value); setSelectedOptionMos('');}
+    console.log('aq')
+    // Atualiza o estado com base na seleção
+    if (value === '1') {
+      if(boolean){setMostrarTabela(true);}
+      else{setMostrarTabela(false);}
+    } else if (value === '2') {
+      if(boolean){setMostrarCarousel(true);
+        console.log('true car')
+      }
+      else{setMostrarCarousel(false);
+        console.log('false car')
+      }
+    } else if (value === '3') {
+      if(boolean){setConteudoJson(true);}
+      else{setConteudoJson(false);}
+    } else if (value === '4') {
+      if(boolean){setModeloJson(true);}
+      else{setModeloJson(false);}
+    } else if (value === '5') {
+      if(boolean){setDados(true);}
+      else{setDados(false);}
+    } 
+
+  };
+
   return (
     <div className="App">
-      {/* <Site /> */}
-      <Teste/>
+      <header className='header'>
+        <span>Atenção: para garantir a precisão na busca de informações e evitar problemas, por favor, adicione mais itens à tabela</span>
+      </header>
+      
+      <label>Mostrar</label>
+      <select value={selectedOptionMos} onChange={(event) => handleChange(event, true)} id="mySelectMostrar" style={{ height: '30px', width: '100px' }}>
+        <option value=""></option>
+        <option value="1">Tabela</option>
+        <option value="2">Cards</option>
+        <option value="3">Conteúdo Json</option>
+        <option value="4">Modelo Fixo</option>  
+        <option value="5">Pesquisar por ID</option>     
+      </select>
+
+      <label>Ocultar</label>
+      <select value={selectedOptionOcul} onChange={(event) => handleChange(event, false)} id="mySelectOcultar" style={{ height: '30px', width: '100px' }}>
+        <option value=""></option>
+        <option value="1">Tabela</option>
+        <option value="2">Cards</option>
+        <option value="3">Conteúdo Json</option>
+        <option value="4">Modelo Fixo</option>    
+        <option value="5">Pesquisar por ID</option>     
+      </select>
+
+      {/* Renderiza o componente Teste com base nos estados atualizados */}
+      <div>
+        <Teste mostrarTabela={mostrarTabela} conteudoJson={conteudoJson} modeloJson={modeloJson} dados={dados} mostrarCarousel={mostrarCarousel} />
+      </div>
     </div>
   );
 };
 
-export default App;
+export { App };

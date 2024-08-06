@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import $ from 'jquery';
+import $, { data } from 'jquery';
 import 'jquery-ui/ui/widgets/sortable';
 import 'pivottable';
 import 'pivottable/dist/pivot.css';
@@ -10,13 +10,17 @@ import '../components/Carousel.css';
 
 import {updateElemento} from "../arquivosSite/utils";
 
+import BuscaInformacoes from '../components/BuscaInformacoes';
+import { returnBotao } from '../components/BuscaInformacoes';
 import Cookies from 'js-cookie';
 
-const Teste = () => {
-    const [exampleData, setData] = useState([]);
-    const [value, setList] = useState('')
+const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}) => {
+    const[exampleData, setData] = useState([]);
+    const[value, setList] = useState('')
     const[clickBotao, setIsButtonClicked] = useState(false)
-    
+
+    const[busca, setBusca] = useState(false);
+
     const [pivotOptions, setPivotOptions] = useState({
       rows: ["acc_class"],
       aggregatorName: "Sum",
@@ -31,36 +35,44 @@ const Teste = () => {
 
     function handleClick(e, value, filters, pivotData) {
       e.preventDefault(); // Previne o comportamento padrão do clique
-      console.log('clicou')
-      let action_class_list = [];
-      let card_ids_list = [];
-
-      // Itera sobre os registros que correspondem aos filtros e adiciona action_class e card_ids à lista
-      pivotData.forEachMatchingRecord(filters,
-        function(record) {
-          action_class_list.push(record.action_class);
-          card_ids_list.push(record.card_ids); // Supondo que card_ids é um array
-        }
-      );
       
-      function getUniqueItems(array) {
-        return Array.from(new Set(array));
-      }
+      if (pivotData.rowAttrs.includes('acc_class') && pivotData.rowAttrs.includes('action_class')){
+        let action_class_list = [];
+        let card_ids_list = [];
 
-      // Se card_ids_list é uma lista de arrays, você pode usar flat para combinar todos eles em um único array
-      const combinedCardIdsList = getUniqueItems(card_ids_list.flat()) ; // Achata os arrays em um único array
-      setList(combinedCardIdsList)
+        // Itera sobre os registros que correspondem aos filtros e adiciona action_class e card_ids à lista
+        pivotData.forEachMatchingRecord(filters,
+          function(record) {
+            action_class_list.push(record.action_class);
+            card_ids_list.push(record.card_ids); // Supondo que card_ids é um array
+          }
+        );
+        
+        function getUniqueItems(array) {
+          return Array.from(new Set(array));
+        }
+
+        // Se card_ids_list é uma lista de arrays, você pode usar flat para combinar todos eles em um único array
+        const combinedCardIdsList = getUniqueItems(card_ids_list.flat()) ; // Achata os arrays em um único array
+        setList(combinedCardIdsList)
+      } else{
+        alert('Por gentileza, seja mais específico na busca para não sobrecarregar o programa e dar erro')
+      }
+      
     }
 
     const atualizarElemento = async (someById, someId, boolean) => {
-      const result = await updateElemento({ ById: someById, id: someId, valor: boolean });
-      setIsButtonClicked(true);
- 
-      if (result) {
-          window.alert('Atualização realizada com sucesso');
-      } else {
-          console.log('Falha na atualização');
-      }
+      console.log('estado botao: ', clickBotao)
+
+        const result = await updateElemento({ ById: someById, id: someId, valor: boolean });
+        setIsButtonClicked(true);
+  
+        if (result) {
+            window.alert('Atualização realizada com sucesso');
+        } else {
+            console.log('Falha na atualização');
+        }
+    
     };
 
     useEffect(() => {
@@ -75,10 +87,12 @@ const Teste = () => {
 
         fetchData();
         setIsButtonClicked(false);
-    }, [clickBotao]);
+        
+        console.log('estado botao: ', clickBotao)
+    }, [clickBotao, returnBotao]);
     
     useEffect(() => {
-        if (exampleData.length > 0) {
+        if (mostrarTabela && exampleData.length > 0) {
             try {
                 // $("#output").empty();
                 $("#output").pivotUI(exampleData, pivotOptions);
@@ -119,29 +133,41 @@ const Teste = () => {
                 console.error("Error rendering PivotTable UI:", error);
             }
         }
-        var tabela = $.pivotUtilities;
+        // else {
+        //   // Limpar o conteúdo da tabela quando ocultar
+        //   $("#output").empty();
+        // }
+
+        
+        // var tabela = $.pivotUtilities;
         // console.log("tabela: ", tabela.renderers.Table)
-    }, [exampleData, pivotOptions]);
+    }, [exampleData, pivotOptions, mostrarTabela]);
     
     var confere = $("#output").data("pivotUIOptions")
     // console.log("confere: ", confere)
-
+    
 return (
   <div>
     <div className="container">
       
       <div className="left-column">
-        <button id="save">Save Config</button>
-        <button id="restore">Restore Config</button>
+        {/* <button id="save">Save Config</button>
+        <button id="restore">Restore Config</button> */}
         
-        <div id="output" style={{ margin: '30px' }}></div>
-        
+        {mostrarTabela ? (
+            <div id="output" style={{ margin: '30px' }} />
+        ) : (
+            <div>Tabela Oculta</div>
+        )}
+          
+        <BuscaInformacoes conteudoJson={conteudoJson} modeloJson={modeloJson} dados={dados} />
+
       </div>
 
       <div className="right-column">
         
-        <Carousel style={{ display: 'inline-flex' }}  targetValue={value} />
-        <button id='botaoCards' type="button" onClick={() => atualizarElemento('card', document.getElementById('cardId').textContent, true)} >Update JSON</button>
+        <Carousel mostrarCarousel={mostrarCarousel} setBusca={setBusca} style={{ display: 'inline-flex' }}  targetValue={value} />
+        <button id='botaoCards' type="button" onClick={() => {  if(busca){atualizarElemento('card', document.getElementById('cardId').textContent, true)} else{alert('Deve haver cards para atualizar')}   } } >Update JSON</button>
         
       </div>
     </div>

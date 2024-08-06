@@ -1,4 +1,3 @@
-Carousel.css
 #h2{
     font-size: xx-large;
     margin-left: 80px;
@@ -63,20 +62,6 @@ Carousel.css
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -93,6 +78,7 @@ body {
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            font-size: xx-large;
         }
         .container {
             display: flex;
