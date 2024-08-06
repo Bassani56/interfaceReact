@@ -8,7 +8,7 @@ import '../arquivosSite/site.css';
 import { getAccountingSummary } from '../buscarDadosSql/buscaFunctionSql'; // Ajuste o caminho aqui
 import { Navigation } from 'swiper/modules'; // Importação corrigida
 import { supabase } from '../supabaseClient';
-
+import Cards from './Cards';
 const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
   const [specificCardIds, setSpecificCardIds] = useState([]);
   const [texts, setTexts] = useState({});
@@ -93,7 +93,7 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
                     }}
                     pagination={{ clickable: true }}
                     scrollbar={{ draggable: true }}
-                    style={{ width: '800px', height: '900px' }}
+                    style={{ width: '100%', height: '100%' }}
                     onSlideChange={handleSlideChange} // Evento para mudança de slide
                   >
                     {
@@ -106,26 +106,12 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
                             </label>
                           </div>
                           
-                          <div
-                              id={`textarea-${specificCardIds[index]}`}
-                              contentEditable
-                              onInput={(e) => handleChange(specificCardIds[index], e)}
-                              style={{
-                                  marginTop: '40px',
-                                  border: '1px solid #ccc',
-                                  padding: '10px',
-                                  marginLeft: '20px',
-                                  maxWidth: '700px',
-                                  minHeight: '400px',
-                                  maxHeight: '100%', // Define a altura máxima para garantir que a rolagem apareça quando necessário
-                                  width: '100%',
-                                  overflowY: 'auto', // Habilita a rolagem vertical
-                                  outline: 'none',
-                                  whiteSpace: 'pre-wrap', // Preserve whitespace and line breaks
-                                  boxSizing: 'border-box' // Inclui padding e border no cálculo da altura e largura total
-                              }}
-                              dangerouslySetInnerHTML={{ __html: texts[specificCardIds[index]] || structData[specificCardIds[index]] || '' }} // Use for initial content
-                          ></div>
+                          <Cards
+                            cardId={specificCardIds[index]}
+                            text={texts[specificCardIds[index]] || structData[specificCardIds[index]] || ''}
+                            handleChange={handleChange}
+                          />
+
                         </SwiperSlide>
                       ))
                     }

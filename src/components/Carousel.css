@@ -1,100 +1,38 @@
-#h2{
-    font-size: xx-large;
-    margin-left: 80px;
-    margin-bottom: 20px;
-}
-
-#h2Id{
-    font-size: xx-large;
-    margin-left: 80px;
-    margin-bottom: 40px;
-}
-
-#bancoDados {
-    width: 1200px;
-    height: 610px;
-    background-color: rgb(65, 102, 88);
-    padding: 10px;
-}
-
-#menuDados{
-    background-color: rgb(124, 67, 67);
-    height: 490px;
-}
-
-/* VerticalCarousel.css */
-.menu {
-    display: flex; /* Define display flex para alinhar itens em linha */
-    justify-content: space-around; /* Espaça igualmente os itens */
-    flex-wrap: wrap; /* Permite que os itens quebrem linha se necessário */
-    height: 500px;
-    background-color: rgb(65, 42, 42);
-}
-  
-  .campos {
-    flex: 1; /* Faz com que cada div ocupe o mesmo espaço */
-    padding: 10px;
-    background-color: rgb(121, 113, 133);
-    text-align: center; /* Centraliza o texto horizontalmente */
-    border: 1px solid #000; /* Adiciona borda preta */
-    height: 62px;
-    font-size: large;
-    width: 33%;
-  }
-  
-  .card{
-   height: 100%;
-   width: 100%; 
-   font-size: x-large;
-  }
-
-#botao {
-    border: 0.1px solid rgb(0, 0, 0);
-    background-color: rgb(121, 113, 133);;
-    padding: 10px;
-    height: 62px;
-    font-size: large;
-    width: 33%;
-    height: 84px;
-}
-
-
-
-
-
 body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        .header {
-            position: -webkit-sticky; 
-            position: sticky;
-            top: 0;
-            width: 100%;
-            height: 30px;
-            background-color: #333;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            font-size: xx-large;
-        }
-        .container {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            height: calc(100vh - 30px); 
-        }
-        .left-column {
-            width: 100%;
-            background-color: #f4f4f4;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .right-column {
-            width: 100%;
-            background-color: #e9e9e9;
-            padding: 10px;
-            box-sizing: border-box;
-        }
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.header {
+    position: -webkit-sticky; 
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 35px;
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    font-size: xx-large;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+.left-column {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.right-column {
+    width: 100%;
+    height: 100%;
+    background-color: #e9e9e9;
+    padding: 10px;
+    box-sizing: border-box;
+}

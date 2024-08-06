@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { Teste } from './PivotTable/Teste'; // Ajuste o caminho conforme necessário
 
+
 const App = () => {
   const [selectedOptionMos, setSelectedOptionMos] = useState('');
   const [selectedOptionOcul, setSelectedOptionUcul] = useState('');
   const [mostrarTabela, setMostrarTabela] = useState(true);
   const [mostrarCarousel, setMostrarCarousel] = useState(true);
   const [modeloJson, setModeloJson] = useState(true);
-  const [conteudoJson, setConteudoJson] = useState(false);
-  const [dados, setDados] = useState(false);
+  const [conteudoJson, setConteudoJson] = useState(true);
+  const [dados, setDados] = useState(true);
 
   const handleChange = (event, boolean) => {
     const value = event.target.value;
@@ -65,10 +66,11 @@ const App = () => {
         <option value="5">Pesquisar por ID</option>     
       </select>
 
-      {/* Renderiza o componente Teste com base nos estados atualizados */}
       <div>
         <Teste mostrarTabela={mostrarTabela} conteudoJson={conteudoJson} modeloJson={modeloJson} dados={dados} mostrarCarousel={mostrarCarousel} />
       </div>
+    
+
     </div>
   );
 };
