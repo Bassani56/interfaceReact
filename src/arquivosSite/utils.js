@@ -1,6 +1,6 @@
 import { supabase } from '../supabaseClient';
-import {getTextAreaValue} from '../buscarDadosSql/buscaTexteArea'
-
+// In src/arquivosSite/utils.js
+import { getTextAreaValue } from '../buscarDadosSql/buscaTexteArea';
 // Função para buscar dados da tabela "cardsn"
 async function fetchData(id) {
   try {

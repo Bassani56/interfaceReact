@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Teste } from './PivotTable/Teste'; // Ajuste o caminho conforme necessário
+import { Teste } from './PivotTable/Teste';// Ajuste o caminho conforme necessário
 
 
 const App = () => {
@@ -42,11 +42,9 @@ const App = () => {
 
   return (
     <div className="App">
-
-      <h1>TESTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE</h1>
-
       <header className='header'>
         <span>Atenção: para garantir a precisão na busca de informações e evitar problemas, por favor, adicione mais itens à tabela</span>
+        <span className='highlight' > Obs: se houver erro na busca por Cards, clique novamente na tabela</span>
       </header>
       
       <label>Mostrar</label>

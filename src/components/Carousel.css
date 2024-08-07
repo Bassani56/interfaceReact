@@ -7,15 +7,25 @@ body {
     position: sticky;
     top: 0;
     width: 100%;
-    height: 35px;
+    height: 80px; /* Ajuste conforme necessário */
     background-color: #333;
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
+    display: flex; /* Use flexbox para alinhamento */
+    flex-direction: column; /* Empilha os itens verticalmente */
+    justify-content: center; /* Alinha itens verticalmente no centro */
+    align-items: center; /* Alinha itens horizontalmente no centro */
     z-index: 1000;
     font-size: xx-large;
+    padding: 10px; /* Adiciona algum espaçamento interno */
+    box-sizing: border-box; /* Inclui padding e border no tamanho total */
 }
+
+.highlight {
+    color: #ffcc00; /* Cor chamativa (amarelo) */
+    font-weight: bold; /* Torna o texto mais espesso */
+}
+
 .container {
     display: flex;
     flex-direction: row;
@@ -35,4 +45,11 @@ body {
     background-color: #e9e9e9;
     padding: 10px;
     box-sizing: border-box;
+}
+
+.SyntaxHighlighter {
+    white-space: pre-wrap; /* Quebra de linha no texto */
+    overflow-wrap: break-word; /* Quebra de palavras longas */
+    word-wrap: break-word; /* Quebra de palavras longas */
+    overflow-x: hidden; /* Remove a rolagem horizontal */
 }

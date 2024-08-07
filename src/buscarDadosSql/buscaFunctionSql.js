@@ -2,7 +2,7 @@ import { supabase } from '../supabaseClient'; // Ajuste o caminho se necessário
 
 const getAccountingSummary = async () => {
   try {
-    const { data, error } = await supabase.rpc('get_accounting_summary_with_action_class');
+    const { data, error } = await supabase.rpc('user_table');
     
     if (error) {
       throw error;

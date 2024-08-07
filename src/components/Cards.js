@@ -1,29 +1,30 @@
-import React, { useMemo, Suspense, lazy } from 'react';
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import React, { useRef, useEffect } from 'react';
+import './Carousel';
 
-// Lazy load SyntaxHighlighter
-const SyntaxHighlighter = lazy(() => import('react-syntax-highlighter').then(module => ({
-  default: module.Prism
-})));
-
-// Define o componente Cards
 const Cards = React.memo(({ cardId, text, handleChange }) => {
-  // Memoize the highlighted text to avoid re-rendering unnecessarily
-  const highlightedText = useMemo(() => (
-    <Suspense fallback={<div>Loading syntax highlighter...</div>}>
-      <SyntaxHighlighter language="json" style={dark}>
-        {text || ''}
-      </SyntaxHighlighter>
-    </Suspense>
-  ), [text]);
+  const editableRef = useRef(null);
+
+  useEffect(() => {
+    // Atualiza o conteúdo inicial se `text` mudar
+    if (editableRef.current) {
+      editableRef.current.innerText = text || '';
+    }
+  }, [text]);
+
+  const handleInput = () => {
+    if (editableRef.current) {
+      handleChange(cardId, editableRef.current.innerText);
+    }
+  };
 
   return (
     <div>
       <div
+        ref={editableRef}
         className="bg-gray-500 grid place-items-center h-screen"
         id={`textarea-${cardId}`}
         contentEditable
-        onInput={(e) => handleChange(cardId, e)}
+        onInput={handleInput}
         style={{
           marginTop: '40px',
           border: '1px solid #ccc',
@@ -32,12 +33,13 @@ const Cards = React.memo(({ cardId, text, handleChange }) => {
           height: '100%',
           width: '100%',
           overflowY: 'auto',
+          overflowX: 'hidden',
           outline: 'none',
           whiteSpace: 'pre-wrap',
           boxSizing: 'border-box'
         }}
       >
-        {highlightedText}
+        {/* Evite usar conteúdo diretamente aqui */}
       </div>
     </div>
   );

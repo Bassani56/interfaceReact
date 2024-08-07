@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import $, { data } from 'jquery';
 import 'jquery-ui/ui/widgets/sortable';
 import 'pivottable';
+
+import 'pivottable/dist/pivot.css'; // Importa o CSS da PivotTable
+
 import 'pivottable/dist/pivot.css';
 import { getAccountingSummary } from '../buscarDadosSql/buscaFunctionSql';
 import Carousel from '../components/Carousel';
@@ -16,16 +19,17 @@ import Cookies from 'js-cookie';
 
 const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}) => {
     const[exampleData, setData] = useState([]);
-    const[value, setList] = useState('')
+    const[value, setList] = useState([])
     const[clickBotao, setIsButtonClicked] = useState(false)
 
     const[busca, setBusca] = useState(false);
-
+  
     const [pivotOptions, setPivotOptions] = useState({
-      rows: ["acc_class"],
+      rows: ["conta", "categoria"],
+      cols: ["ano"],
       aggregatorName: "Sum",
       vals: ["total_value"],
-      rendererName: "Heatmap",
+      rendererName: "Table",
       rendererOptions: {
         table: {
           clickCallback: handleClick
@@ -35,8 +39,8 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
 
     function handleClick(e, value, filters, pivotData) {
       e.preventDefault(); // Previne o comportamento padrão do clique
-      
-      if (pivotData.rowAttrs.includes('acc_class') && pivotData.rowAttrs.includes('action_class')){
+      // console.log(pivotData)
+      if (pivotData.rowAttrs.includes('conta') && (pivotData.rowAttrs.includes('categoria') || pivotData.rowAttrs.includes('ano')) ){
         let action_class_list = [];
         let card_ids_list = [];
 
@@ -143,7 +147,7 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
         // console.log("tabela: ", tabela.renderers.Table)
     }, [exampleData, pivotOptions, mostrarTabela]);
     
-    var confere = $("#output").data("pivotUIOptions")
+    // var confere = $("#output").data("pivotUIOptions")
     // console.log("confere: ", confere)
     
 return (
@@ -166,7 +170,11 @@ return (
 
       <div className="right-column">
         
-        <Carousel mostrarCarousel={mostrarCarousel} setBusca={setBusca} style={{ display: 'inline-flex' }}  targetValue={value} />
+        {value.length > 0 ? (
+          <Carousel mostrarCarousel={mostrarCarousel} setBusca={setBusca} style={{ display: 'inline-flex' }}  targetValue={value}/>
+        ) : (
+          <div>Busque campos válidos da tabela</div>
+        )}
         <button id='botaoCards' type="button" onClick={() => {  if(busca){atualizarElemento('card', document.getElementById('cardId').textContent, true)} else{alert('Deve haver cards para atualizar')}   } } >Update JSON</button>
         
       </div>

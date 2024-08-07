@@ -1,61 +1,73 @@
 
 #idInput {
-    width: 72.6%;
-    height: 30px;
-    background-color: rgb(63, 206, 211);
+  width: 72.6%;
+  height: 30px;
+  background-color: rgb(63, 206, 211);
 }
 
 #buscarBotao{
-    width: 160px;
-    height: 34.2px;
-    margin-top: px;
-    background-color: rgb(63, 206, 211);
+  width: 160px;
+  height: 34.2px;
+  margin-top: px;
+  background-color: rgb(63, 206, 211);
 }
 
 #botaoCards {
-    position: fixed;
-    top:15%; /* Ajuste a distância da parte inferior da tela */
-    right:27%; /* Ajuste a distância da parte direita da tela */
-    width: auto; /* Ajuste conforme necessário */
-    height: auto; /* Ajuste conforme necessário */
-    padding: 10px 20px; /* Ajuste conforme necessário */
-    background-color: #007bff; /* Cor de fundo do botão */
-    color: #fff; /* Cor do texto do botão */
-    border: none; /* Remove bordas do botão */
-    border-radius: 5px; /* Bordas arredondadas */
-    cursor: pointer; /* Cursor de ponteiro ao passar sobre o botão */
-    z-index: 1000; /* Garante que o botão esteja acima de outros elementos */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Sombra para destacar o botão */
-  }
-  
+  position: fixed;
+  top:15%; /* Ajuste a distância da parte inferior da tela */
+  right:27%; /* Ajuste a distância da parte direita da tela */
+  width: auto; /* Ajuste conforme necessário */
+  height: auto; /* Ajuste conforme necessário */
+  padding: 10px 20px; /* Ajuste conforme necessário */
+  background-color: #007bff; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  border: none; /* Remove bordas do botão */
+  border-radius: 5px; /* Bordas arredondadas */
+  cursor: pointer; /* Cursor de ponteiro ao passar sobre o botão */
+  z-index: 1000; /* Garante que o botão esteja acima de outros elementos */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Sombra para destacar o botão */
+}
+
 
 .swiper-container {
-    position: relative;
-  }
-  
-  .swiper-button-prev,
-    .swiper-button-next {
-    position: fixed;
-    top: 20%; /* Ajuste conforme necessário, para ficar no centro verticalmente */
-    transform: translateY(-50%); /* Centraliza verticalmente */
-    width: 50px; /* Ajuste conforme necessário */
-    height: 50px; /* Ajuste conforme necessário */
-    background-color: rgba(0, 0, 0, 0.5); /* Ajuste conforme necessário */
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1000; /* Garante que os botões estejam acima de outros elementos */
-    }
-  
-  .swiper-button-prev {
-    left: 50%; /* Ajuste conforme necessário */
-  }
-  
+  position: relative;
+}
+
+.swiper-button-prev,
   .swiper-button-next {
-    right: 40%; /* Ajuste conforme necessário */
+  position: fixed;
+  top: 20%; /* Ajuste conforme necessário, para ficar no centro verticalmente */
+  transform: translateY(-50%); /* Centraliza verticalmente */
+  width: 50px; /* Ajuste conforme necessário */
+  height: 50px; /* Ajuste conforme necessário */
+  background-color: rgba(0, 0, 0, 0.5); /* Ajuste conforme necessário */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000; /* Garante que os botões estejam acima de outros elementos */
   }
-  
-  
-  
+
+.swiper-button-prev {
+  left: 50%; /* Ajuste conforme necessário */
+}
+
+.swiper-button-next {
+  right: 40%; /* Ajuste conforme necessário */
+}
+
+
+
+.swiper-container {
+  width: 100%; /* Ajusta a largura do contêiner do Swiper para 100% */
+  overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse os limites do contêiner */
+}
+
+.swiper-slide {
+  display: flex; /* Permite que o conteúdo dentro do slide se ajuste corretamente */
+  flex-direction: column; /* Alinha o conteúdo verticalmente */
+  overflow-wrap: break-word; /* Quebra palavras longas para ajustar o conteúdo */
+  word-wrap: break-word; /* Quebra palavras longas */
+}
+
