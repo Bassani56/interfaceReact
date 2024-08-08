@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo de Formulário</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #formContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none; /* Inicialmente oculto */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Garante que o formulário fique acima do conteúdo */
+        }
+
+        .form-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            position: relative;
+            width: 300px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #closeFormBtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="showFormBtn">Mostrar Formulário</button>
+
+    <div id="formContainer">
+        <div class="form-box">
+            <span id="closeFormBtn">&times;</span>
+            <h2>Formulário</h2>
+            <form id="myForm">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required><br><br>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br><br>
+                
+                <label for="message">Mensagem:</label><br>
+                <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+                
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('showFormBtn').addEventListener('click', function() {
+            document.getElementById('formContainer').style.display = 'flex';
+        });
+
+        document.getElementById('closeFormBtn').addEventListener('click', function() {
+            document.getElementById('formContainer').style.display = 'none';
+        });
+
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Formulário enviado!');
+        });
+    </script>
+</body>
+</html>

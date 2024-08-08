@@ -17,6 +17,9 @@ import BuscaInformacoes from '../components/BuscaInformacoes';
 import { returnBotao } from '../components/BuscaInformacoes';
 import Cookies from 'js-cookie';
 
+
+import ErrorBoundary from './ErrorBoundary';
+
 const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}) => {
     const[exampleData, setData] = useState([]);
     const[value, setList] = useState([])
@@ -171,8 +174,13 @@ return (
       <div className="right-column">
         
         {value.length > 0 ? (
-          <Carousel mostrarCarousel={mostrarCarousel} setBusca={setBusca} style={{ display: 'inline-flex' }}  targetValue={value}/>
-        ) : (
+
+            <ErrorBoundary>
+              <Carousel mostrarCarousel={mostrarCarousel} setBusca={setBusca} style={{ display: 'inline-flex' }}  targetValue={value}/>
+   
+            </ErrorBoundary>
+
+               ) : (
           <div>Busque campos válidos da tabela</div>
         )}
         <button id='botaoCards' type="button" onClick={() => {  if(busca){atualizarElemento('card', document.getElementById('cardId').textContent, true)} else{alert('Deve haver cards para atualizar')}   } } >Update JSON</button>
