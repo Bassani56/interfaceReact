@@ -1,5 +1,6 @@
 export const getTextAreaValue = (card_id) => {
   const textarea = document.getElementById(`textarea-${card_id}`);
+  console.log("textarea: ", textarea)
   if (textarea) {
     return textarea.textContent;
   } else {
@@ -8,4 +9,3 @@ export const getTextAreaValue = (card_id) => {
   }
 };
 
-//Buscar uma maneira de acessar o textearea e buscar o card_id por lá, esta é a pira talkei 

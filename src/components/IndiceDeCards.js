@@ -70,6 +70,7 @@ function IndiceDeCards({ structData, specificCardIds }) {
 
             {isFormVisible && (
                 <div className="overlay">
+
                     <div className="formContainer">
                         <button onClick={() => setIsFormVisible(false)} className="closeButton">X</button>
                         <h1>Escolha quais cards modificar</h1>
@@ -85,7 +86,7 @@ function IndiceDeCards({ structData, specificCardIds }) {
                                 </label>
                             ))}
                         </form>
-
+mostrar
                         <div id="statusMessage" style={{
                             marginTop: '20px',
                             fontSize: 'large',

@@ -27,12 +27,17 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
 
     const[busca, setBusca] = useState(false);
   
+    var renderers = $.extend($.pivotUtilities.renderers,
+      $.pivotUtilities.export_renderers);
+
+    console.log("modulo renderers: ", renderers)
+
     const [pivotOptions, setPivotOptions] = useState({
-      rows: ["conta", "categoria"],
+      rows: ["categoria"],
       cols: ["ano"],
       aggregatorName: "Sum",
       vals: ["total_value"],
-      rendererName: "Table",
+      rendererName: "TSV Export",
       rendererOptions: {
         table: {
           clickCallback: handleClick
@@ -43,7 +48,7 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
     function handleClick(e, value, filters, pivotData) {
       e.preventDefault(); // Previne o comportamento padrão do clique
       // console.log(pivotData)
-      if (pivotData.rowAttrs.includes('conta') && (pivotData.rowAttrs.includes('categoria') || pivotData.rowAttrs.includes('ano')) ){
+      // if (pivotData.rowAttrs.includes('conta') && (pivotData.rowAttrs.includes('categoria') || pivotData.rowAttrs.includes('ano')) ){
         let action_class_list = [];
         let card_ids_list = [];
 
@@ -62,16 +67,17 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
         // Se card_ids_list é uma lista de arrays, você pode usar flat para combinar todos eles em um único array
         const combinedCardIdsList = getUniqueItems(card_ids_list.flat()) ; // Achata os arrays em um único array
         setList(combinedCardIdsList)
-      } else{
-        alert('Por gentileza, seja mais específico na busca para não sobrecarregar o programa e dar erro')
-      }
+      // } else{
+      //   alert('Por gentileza, seja mais específico na busca para não sobrecarregar o programa e dar erro')
+      // }
       
     }
 
     const atualizarElemento = async (someById, someId, boolean) => {
-      console.log('estado botao: ', clickBotao)
-
+        console.log('estado botao: ', clickBotao)
+        console.log('someId: ', someId)
         const result = await updateElemento({ ById: someById, id: someId, valor: boolean });
+        // console.log("result: ", result)
         setIsButtonClicked(true);
   
         if (result) {
@@ -86,6 +92,7 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
         const fetchData = async () => {
             try {
                 const accountingData = await getAccountingSummary();
+                console.log("accountingData: ", accountingData)
                 setData(accountingData);
             } catch (error) {
                 console.error('Erro ao buscar resumo contábil:', error);
@@ -103,7 +110,8 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
             try {
                 // $("#output").empty();
                 $("#output").pivotUI(exampleData, pivotOptions);
-
+                
+      
                 $("#save").on("click", function() {
                   var config = $("#output").data("pivotUIOptions");
                   if (config && config.rendererOptions) {
@@ -139,6 +147,8 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
                } catch (error) {
                 console.error("Error rendering PivotTable UI:", error);
             }
+
+          
         }
         // else {
         //   // Limpar o conteúdo da tabela quando ocultar
@@ -146,13 +156,13 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
         // }
 
         
-        // var tabela = $.pivotUtilities;
-        // console.log("tabela: ", tabela.renderers.Table)
+        var tabela = $.pivotUtilities;
+        console.log("tabela: ", tabela.renderers)
     }, [exampleData, pivotOptions, mostrarTabela]);
     
-    // var confere = $("#output").data("pivotUIOptions")
-    // console.log("confere: ", confere)
-    
+    var confere = $("#output").data("pivotUIOptions")
+    console.log("confere: ", confere)
+  
 return (
   <div>
     <div className="container">

@@ -53,7 +53,7 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
             console.error(`Erro ao executar a query:`, error);
         } else {
             const newStructData = {};
-            console.log('ObjectKeys Data: ', Object.entries(data));
+            // console.log('ObjectKeys Data: ', Object.entries(data));
             data.forEach(item => {
                 newStructData[item.card_id] = item.struct; // Armazena o struct como um objeto JSON
             });
@@ -91,15 +91,15 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
     setCurrentIndex(swiper.activeIndex);
   };
 
- console.log(Object.entries(structData))
+//  console.log(Object.entries(structData))
 
-
-  
  const[chamaCards, setChamaCards] = useState(false)
   const chamaIndiceCards = (event) =>{
     event.preventDefault()
     setChamaCards(true)
   }
+
+  console.log(structData)
 
   return (
     <div className='swiper'>
@@ -108,7 +108,7 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
 
         <div>
           <div className="swiper-button-prev">{"<"}</div>
-          
+           
           <Swiper
             onSwiper={(swiper) => setSwiperInstance(swiper)}
             modules={[Navigation]} // Usando o módulo de navegação
@@ -128,9 +128,9 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
                 <SwiperSlide key={index}>
                   <div>
                     <h2 style={{marginTop:'1px'}}>Slide: {index + 1} / {Object.keys(structData).length}</h2>
-                    <div style={{ fontSize: 'x-large', color: 'black', display: 'flex'}} id='cardId'>
-                      <div>{specificCardIds[index]} </div>
-                      <button onClick={chamaIndiceCards} style={{marginLeft: '600px', width: '100px', height: '40px'}}>Teste</button>
+                    <div style={{ fontSize: 'x-large', color: 'black', display: 'flex'}} >
+                      <div id='cardId'>{specificCardIds[index]}</div>
+                      <button onClick={chamaIndiceCards} id='outro' style={{marginLeft: '600px', width: '100px', height: '40px'}}>Teste</button>
                       {chamaCards && <IndiceDeCards  structData={structData} specificCardIds={specificCardIds} />}
                     </div>
                     

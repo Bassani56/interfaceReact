@@ -123,6 +123,9 @@ async function inserirElemento() {
 async function updateElemento({ ById, id, valor }) {
   let newContent;
   let userId = id;
+
+  console.log('id', id, "\n")
+  console.log('')
   if(!valor){
     newContent = document.getElementById(ById).value;
   }
@@ -130,6 +133,8 @@ async function updateElemento({ ById, id, valor }) {
   if(valor){
     newContent = getTextAreaValue(id);
   }
+
+  console.log("newContent: ", newContent)
 
   if (!newContent) {
     window.alert('Conteúdo JSON não pode estar vazio!');

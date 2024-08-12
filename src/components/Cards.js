@@ -21,7 +21,7 @@ const Cards = React.memo(({ cardId, text, handleChange }) => {
     <div>
       <div
         ref={editableRef}
-        className="bg-gray-500 grid place-items-center h-screen"
+        
         id={`textarea-${cardId}`}
         contentEditable
         onInput={handleInput}
@@ -39,6 +39,7 @@ const Cards = React.memo(({ cardId, text, handleChange }) => {
           boxSizing: 'border-box'
         }}
       >
+        
         {/* Evite usar conteúdo diretamente aqui */}
       </div>
     </div>

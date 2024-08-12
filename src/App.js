@@ -42,10 +42,10 @@ const App = () => {
 
   return (
     <div className="App">
-      <header className='header'>
+      {/* <header className='header'>
         <span>Atenção: para garantir a precisão na busca de informações e evitar problemas, por favor, adicione mais itens à tabela</span>
         <span className='highlight' > Obs: se houver erro na busca por Cards, clique novamente na tabela</span>
-      </header>
+      </header> */}
       
       <label>Mostrar</label>
       <select value={selectedOptionMos} onChange={(event) => handleChange(event, true)} id="mySelectMostrar" style={{ height: '30px', width: '100px' }}>
