@@ -124,8 +124,6 @@ async function updateElemento({ ById, id, valor }) {
   let newContent;
   let userId = id;
 
-  console.log('id', id, "\n")
-  console.log('')
   if(!valor){
     newContent = document.getElementById(ById).value;
   }
@@ -134,7 +132,7 @@ async function updateElemento({ ById, id, valor }) {
     newContent = getTextAreaValue(id);
   }
 
-  console.log("newContent: ", newContent)
+  // console.log("newContent: ", newContent)
 
   if (!newContent) {
     window.alert('Conteúdo JSON não pode estar vazio!');
@@ -149,8 +147,8 @@ async function updateElemento({ ById, id, valor }) {
     return false;
   }
 
-  console.log('Tentando atualizar dados para o ID:', userId);
-  console.log('Novo conteúdo:', newContent);
+  // console.log('Tentando atualizar dados para o ID:', userId);
+  // console.log('Novo conteúdo:', newContent);
 
   try {
     const { error } = await supabase

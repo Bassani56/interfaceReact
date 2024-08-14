@@ -1,27 +1,25 @@
-import React, { useRef, useEffect } from 'react';
-import './Carousel';
+import React, { useRef, useEffect, useCallback } from 'react';
 
 const Cards = React.memo(({ cardId, text, handleChange }) => {
   const editableRef = useRef(null);
 
   useEffect(() => {
-    // Atualiza o conteúdo inicial se `text` mudar
     if (editableRef.current) {
       editableRef.current.innerText = text || '';
     }
   }, [text]);
 
-  const handleInput = () => {
+  const handleInput = useCallback(() => {
     if (editableRef.current) {
+      // Passa o valor diretamente para handleChange
       handleChange(cardId, editableRef.current.innerText);
     }
-  };
+  }, [cardId, handleChange]);
 
   return (
     <div>
       <div
         ref={editableRef}
-        
         id={`textarea-${cardId}`}
         contentEditable
         onInput={handleInput}
@@ -36,11 +34,12 @@ const Cards = React.memo(({ cardId, text, handleChange }) => {
           overflowX: 'hidden',
           outline: 'none',
           whiteSpace: 'pre-wrap',
-          boxSizing: 'border-box'
+          boxSizing: 'border-box',
+          outline: 'none',
+          tabIndex: 0,
         }}
+        // aria-label={`Edit text for card ${cardId}`}
       >
-        
-        {/* Evite usar conteúdo diretamente aqui */}
       </div>
     </div>
   );

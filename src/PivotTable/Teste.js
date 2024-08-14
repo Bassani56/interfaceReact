@@ -27,17 +27,17 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
 
     const[busca, setBusca] = useState(false);
   
-    var renderers = $.extend($.pivotUtilities.renderers,
-      $.pivotUtilities.export_renderers);
+    // var renderers = $.extend($.pivotUtilities.renderers,
+    //   $.pivotUtilities.export_renderers);
 
-    console.log("modulo renderers: ", renderers)
+    // console.log("modulo renderers: ", renderers)
 
     const [pivotOptions, setPivotOptions] = useState({
-      rows: ["categoria"],
+      rows: ["conta", "ação"],
       cols: ["ano"],
       aggregatorName: "Sum",
       vals: ["total_value"],
-      rendererName: "TSV Export",
+      rendererName: "Table",
       rendererOptions: {
         table: {
           clickCallback: handleClick
@@ -49,13 +49,11 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
       e.preventDefault(); // Previne o comportamento padrão do clique
       // console.log(pivotData)
       // if (pivotData.rowAttrs.includes('conta') && (pivotData.rowAttrs.includes('categoria') || pivotData.rowAttrs.includes('ano')) ){
-        let action_class_list = [];
         let card_ids_list = [];
 
         // Itera sobre os registros que correspondem aos filtros e adiciona action_class e card_ids à lista
         pivotData.forEachMatchingRecord(filters,
           function(record) {
-            action_class_list.push(record.action_class);
             card_ids_list.push(record.card_ids); // Supondo que card_ids é um array
           }
         );
@@ -74,8 +72,8 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
     }
 
     const atualizarElemento = async (someById, someId, boolean) => {
-        console.log('estado botao: ', clickBotao)
-        console.log('someId: ', someId)
+        // console.log('estado botao: ', clickBotao)
+        // console.log('someId: ', someId)
         const result = await updateElemento({ ById: someById, id: someId, valor: boolean });
         // console.log("result: ", result)
         setIsButtonClicked(true);
@@ -92,7 +90,7 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
         const fetchData = async () => {
             try {
                 const accountingData = await getAccountingSummary();
-                console.log("accountingData: ", accountingData)
+                // console.log("accountingData: ", accountingData)
                 setData(accountingData);
             } catch (error) {
                 console.error('Erro ao buscar resumo contábil:', error);
@@ -102,7 +100,7 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
         fetchData();
         setIsButtonClicked(false);
         
-        console.log('estado botao: ', clickBotao)
+        // console.log('estado botao: ', clickBotao)
     }, [clickBotao, returnBotao]);
     
     useEffect(() => {
@@ -110,58 +108,22 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
             try {
                 // $("#output").empty();
                 $("#output").pivotUI(exampleData, pivotOptions);
-                
-      
-                $("#save").on("click", function() {
-                  var config = $("#output").data("pivotUIOptions");
-                  if (config && config.rendererOptions) {
-                      var config_copy = JSON.parse(JSON.stringify(config));
-              
-                      // Verificar e remover propriedades não serializáveis, se necessário
-                      delete config_copy["aggregators"];
-                      delete config_copy["renderers"];
-              
-                      // Salvar configuração no cookie
-                      Cookies.set("pivotConfig", JSON.stringify(config_copy));
-                      console.log("Config saved:", JSON.stringify(config_copy));
-                  } else {
-                      console.log("No rendererOptions found.");
-                  }
-              });
-              
-              $("#restore").on("click", function() {
-                const savedConfig = Cookies.get("pivotConfig");
-                console.log("Retrieved cookie:", savedConfig);
-            
-                if (savedConfig) {
-                    const parsedConfig = JSON.parse(savedConfig);
-                    console.log("Parsed config:", parsedConfig);
-            
-                    // Restaurar configuração do PivotTable
-                    $("#output").pivotUI(exampleData, parsedConfig, true);
-                } else {
-                    console.log("No savedConfig found in cookies.");
-                }
-              });
             
                } catch (error) {
                 console.error("Error rendering PivotTable UI:", error);
             }
-
-          
         }
-        // else {
-        //   // Limpar o conteúdo da tabela quando ocultar
-        //   $("#output").empty();
-        // }
-
+        else {
+          // Limpar o conteúdo da tabela quando ocultar
+          $("#output").empty();
+        }
         
-        var tabela = $.pivotUtilities;
-        console.log("tabela: ", tabela.renderers)
+        // var tabela = $.pivotUtilities;
+        // console.log("tabela: ", tabela.renderers)
     }, [exampleData, pivotOptions, mostrarTabela]);
     
     var confere = $("#output").data("pivotUIOptions")
-    console.log("confere: ", confere)
+    // console.log("confere: ", confere)
   
 return (
   <div>

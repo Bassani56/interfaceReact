@@ -35,22 +35,6 @@ function IndiceDeCards({ structData, specificCardIds }) {
         return 'Nenhuma opção marcada.';
     };
 
-    const retornaObjetosIguais = () => {
-        const seen = new Set();
-        const duplicates = [];
-
-        Object.values(structData).forEach((item) => {
-            const itemString = JSON.stringify(item);
-            if (seen.has(itemString)) {
-                duplicates.push(item);
-            } else {
-                seen.add(itemString);
-            }
-        });
-
-        return duplicates;
-    };
-
     const chaves = Object.keys(structData);
     const editableRef = useRef(null);
 
@@ -86,7 +70,7 @@ function IndiceDeCards({ structData, specificCardIds }) {
                                 </label>
                             ))}
                         </form>
-mostrar
+
                         <div id="statusMessage" style={{
                             marginTop: '20px',
                             fontSize: 'large',

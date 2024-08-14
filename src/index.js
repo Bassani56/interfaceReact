@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'; // Importa ReactDOM diretamente do paco
 
 import { App } from './App'; // Importa o componente principal App
 import reportWebVitals from './reportWebVitals'; // Importa a função para reportar métricas web
-
+// import PaginatedList from './Lazy_loading'
 // Cria a raiz do React no elemento com id 'root'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -11,6 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
+    {/* <PaginatedList/> */}
   </React.StrictMode>
 );
 

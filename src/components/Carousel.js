@@ -9,11 +9,8 @@ import { getAccountingSummary } from '../buscarDadosSql/buscaFunctionSql'; // Aj
 import { Navigation } from 'swiper/modules'; // Importação corrigida
 import { supabase } from '../supabaseClient';
 import Cards from './Cards';
-import { event } from 'jquery';
-
 
 import IndiceDeCards from './IndiceDeCards';
-
 
 const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
   
@@ -29,7 +26,7 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
     setSpecificCardIds(targetValue);
     if(specificCardIds.length > 0 ){
       
-      console.log('desceu')
+      // console.log('desceu')
       setBusca(true)
       const atualizar = async () => {
         await buscaStruct(specificCardIds);
@@ -73,19 +70,14 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
     }
 };
 
-
-  const handleChange = (id, event) => {
-    // console.log('event:', event);
-    if (event && event.target) {
+    const handleChange = (id, newValue) => {
+      // console.log("newValue: ", newValue)
       setTexts(prevTexts => ({
         ...prevTexts,
-        [id]: event.target.value
+        [id]: newValue
       }));
-    } else {
-      console.warn('event.target é undefined');
-    }
-  };
-  
+    };
+
 
   const handleSlideChange = (swiper) => {
     setCurrentIndex(swiper.activeIndex);
@@ -99,7 +91,7 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
     setChamaCards(true)
   }
 
-  console.log(structData)
+  // console.log(structData)
 
   return (
     <div className='swiper'>
