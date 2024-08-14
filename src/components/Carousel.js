@@ -70,14 +70,18 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
     }
 };
 
-    const handleChange = (id, newValue) => {
-      // console.log("newValue: ", newValue)
+  const handleChange = (id, event) => {
+    // console.log('event.target:', event);
+    if (event && event.target) {
+      console.log('agora tem conteudo')
       setTexts(prevTexts => ({
         ...prevTexts,
-        [id]: newValue
+        [id]: event.target.value
       }));
-    };
-
+    } else {
+      console.warn('event.target é undefined');
+    }
+  };
 
   const handleSlideChange = (swiper) => {
     setCurrentIndex(swiper.activeIndex);
