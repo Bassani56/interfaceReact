@@ -4,16 +4,11 @@ const Cards = React.memo(({ cardId, text, handleChange }) => {
   const editableRef = useRef(null);
 
   useEffect(() => {
-    if (editableRef.current) {
-      editableRef.current.innerText = text || '';
-    }
+    if (editableRef.current) { editableRef.current.innerText = text || ''; }
   }, [text]);
 
   const handleInput = useCallback(() => {
-    if (editableRef.current) {
-      // Passa o valor diretamente para handleChange
-      handleChange(cardId, editableRef.current.innerText);
-    }
+    if (editableRef.current) {  handleChange(cardId, editableRef.current.innerText); }
   }, [cardId, handleChange]);
 
   return (
@@ -38,7 +33,6 @@ const Cards = React.memo(({ cardId, text, handleChange }) => {
           outline: 'none',
           tabIndex: 0,
         }}
-        // aria-label={`Edit text for card ${cardId}`}
       >
       </div>
     </div>

@@ -2,28 +2,7 @@ import { supabase } from '../supabaseClient';
 // In src/arquivosSite/utils.js
 import { getTextAreaValue } from '../buscarDadosSql/buscaTexteArea';
 // Função para buscar dados da tabela "cardsn"
-async function fetchData(id) {
-  try {
-    const { data, error } = await supabase
-      .from('cardsn')
-      .select('struct')
-      .eq('card_id', id);
-    if (error) {
-      console.error('Erro ao buscar dados:', error);
-      return null;
-    }
-    if (data && data.length > 0) {
-      const json_text = JSON.stringify(data[0].struct, null, 2); // Ajustado para 'struct'
-      return json_text;
-    } else {
-      console.log('Nenhum dado encontrado para o ID:', id);
-      return null;
-    }
-  } catch (error) {
-    console.error('Erro ao buscar dados:', error.message);
-    return null;
-  }
-}
+import { fetchData } from '../fetchData';
 
 async function buscarElemento() {
   var userId = document.getElementById('idInput').value; // Obtém o ID do usuário
@@ -35,19 +14,17 @@ async function buscarElemento() {
       const jsonInputElement = document.getElementById("jsonInput");
       const modeloInputElement = document.getElementById("modeloInput");
 
-      console.log("jsonInputElement: ", jsonInputElement)
+      // console.log("jsonInputElement: ", jsonInputElement)
       if (jsonInputElement && modeloInputElement) {
         jsonInputElement.value = json_text; // Preenche a textarea com o JSON recuperado
         modeloInputElement.value = json_text; // Preenche a textarea original com o JSON recuperado
       } else {
         console.error('Elementos jsonInput ou modeloInput não encontrados.');
       }
-    } else {
-      console.log('Não foi possível encontrar dados para o ID:', userId);
-    }
-  } catch (error) {
-    console.error('Erro ao buscar dados:', error.message);
-  }
+    } else { console.log('Não foi possível encontrar dados para o ID:', userId); }
+  } 
+  
+  catch (error) { console.error('Erro ao buscar dados:', error.message); }
 }
 
 // Função para validar JSON
@@ -87,9 +64,8 @@ async function inserirElemento() {
         return false;
     }
 
-    try {
-        newContent = JSON.parse(newContent);
-    } catch (e) {
+    try { newContent = JSON.parse(newContent); } 
+    catch (e) {
         window.alert('Conteúdo inválido! Certifique-se de inserir um JSON válido.');
         console.error('Erro ao parsear JSON:', e.message);
         return false;
@@ -124,24 +100,17 @@ async function updateElemento({ ById, id, valor }) {
   let newContent;
   let userId = id;
 
-  if(!valor){
-    newContent = document.getElementById(ById).value;
-  }
+  if(!valor){ newContent = document.getElementById(ById).value; }
 
-  if(valor){
-    newContent = getTextAreaValue(id);
-  }
-
-  // console.log("newContent: ", newContent)
+  if(valor){ newContent = getTextAreaValue(id); }
 
   if (!newContent) {
     window.alert('Conteúdo JSON não pode estar vazio!');
     return false;
   }
 
-  try {
-    newContent = JSON.parse(newContent);
-  } catch (e) {
+  try { newContent = JSON.parse(newContent); } 
+  catch (e) {
     window.alert('Conteúdo inválido! Certifique-se de inserir um JSON válido.');
     console.error('Erro ao parsear JSON:', e.message);
     return false;
@@ -155,16 +124,13 @@ async function updateElemento({ ById, id, valor }) {
       .from('cardsn')
       .update({ struct: newContent })
       .eq('card_id', userId)
-       // Adiciona a seleção para obter os dados atualizados
 
     if (error) {
       console.error('Erro ao atualizar dados:', error);
       window.alert('Erro ao atualizar dados: ' + error.message);
       return false;
     }
-    else{
-      return true;
-    }
+    else{ return true; }
 
     
   } catch (error) {

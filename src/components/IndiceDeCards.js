@@ -13,7 +13,7 @@ function IndiceDeCards({ structData, specificCardIds }) {
         setIndexCard(prevState => {
             if (checked) {
                 return [...prevState, index];
-            } else {
+            } else { 
                 return prevState.filter(item => item !== index);
             }
         });
@@ -39,7 +39,6 @@ function IndiceDeCards({ structData, specificCardIds }) {
     const editableRef = useRef(null);
 
     useEffect(() => {
-        // Atualiza o conteúdo inicial se `indexCard` mudar
         if (editableRef.current) {
             
             const text = indexCard.map(index => JSON.stringify(structData[chaves[index]], null, 2)).join('\n\n');

@@ -5,15 +5,14 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import '../arquivosSite/site.css';
-import { getAccountingSummary } from '../buscarDadosSql/buscaFunctionSql'; // Ajuste o caminho aqui
 import { Navigation } from 'swiper/modules'; // Importação corrigida
-import { supabase } from '../supabaseClient';
 import Cards from './Cards';
-
+import { buscaStruct } from '../buscarDadosSql/buscaStruct';
 import IndiceDeCards from './IndiceDeCards';
 
+import slices from './Slices';
+
 const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
-  
   const [specificCardIds, setSpecificCardIds] = useState([]);
   const [texts, setTexts] = useState({});
   const [structData, setStructData] = useState({});
@@ -21,84 +20,61 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
   const [swiperInstance, setSwiperInstance] = useState(null);
 
   // console.log("targetValue: ", targetValue)
-  
   useEffect(() => {
-    setSpecificCardIds(targetValue);
-    if(specificCardIds.length > 0 ){
-      
-      // console.log('desceu')
-      setBusca(true)
-      const atualizar = async () => {
-        await buscaStruct(specificCardIds);
-      };
-      if(targetValue.length > 0){atualizar();}
-      
-    }
-
-    if (swiperInstance) {swiperInstance.slideTo(0); } // Navega para o primeiro slide
+  setSpecificCardIds(targetValue);
+  
+  if (specificCardIds.length > 0) {
+    setBusca(true);
     
-  }, [specificCardIds, swiperInstance, targetValue]);
+    const atualizar = async () => {
 
-  const buscaStruct = async (specificCardIds) => {
-    try {
-        const { data, error } = await supabase
-            .from('cardsn')
-            .select('struct, card_id')
-            .in('card_id', specificCardIds);
-
-        if (error) {
-            console.error(`Erro ao executar a query:`, error);
-        } else {
-            const newStructData = {};
-            // console.log('ObjectKeys Data: ', Object.entries(data));
-            data.forEach(item => {
-                newStructData[item.card_id] = item.struct; // Armazena o struct como um objeto JSON
-            });
-
-            // Ordena structData de acordo com a ordem de specificCardIds
-            const orderedStructData = specificCardIds.reduce((acc, id) => {
-                if (newStructData[id]) {
-                    acc[id] = newStructData[id];
-                }
-                return acc;
-            }, {});
-
-            setStructData(orderedStructData);
+        const data = await buscaStruct(specificCardIds);
+       
+        if (data) {
+          // Mescla os novos dados com os dados anteriores
+          setStructData(data);
+          
         }
-    } catch (error) {
-        console.error(`Erro ao executar a query:`, error);
-    }
-};
+    };
+   
+    atualizar();
+  }
+
+  if (swiperInstance) {
+    swiperInstance.slideTo(0); // Navega para o primeiro slide
+  }
+ 
+
+}, [specificCardIds, swiperInstance, targetValue]);
 
   const handleChange = (id, event) => {
-    // console.log('event.target:', event);
     if (event && event.target) {
       console.log('agora tem conteudo')
       setTexts(prevTexts => ({
         ...prevTexts,
         [id]: event.target.value
       }));
-    } else {
-      console.warn('event.target é undefined');
-    }
+    } 
+    
+    else { console.warn('event.target é undefined'); }
   };
 
-  const handleSlideChange = (swiper) => {
+  const handleSlideChange = (swiper) => {   
+    if (structData && Object.keys(structData).length > 0) {
+      slices(structData, currentIndex);
+    } else {
+      console.warn('structData está vazio ou null na função handleSlideChange');
+    }
     setCurrentIndex(swiper.activeIndex);
   };
 
-//  console.log(Object.entries(structData))
-
- const[chamaCards, setChamaCards] = useState(false)
-  const chamaIndiceCards = (event) =>{
-    event.preventDefault()
-    setChamaCards(true)
-  }
-
-  // console.log(structData)
-
+  
+  // if(slices != null) {console.log("slices: ", slices)}
+  
+  
   return (
-    <div className='swiper'>
+    <div >
+
       {mostrarCarousel && !targetValue && <p id='mensagem'>Clique na tabela para pesquisar por Cards Específicos</p>}
       {mostrarCarousel ? (
 
@@ -119,15 +95,16 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
             style={{ width: '1200px', height: '100%' }}
             onSlideChange={handleSlideChange} // Evento para mudança de slide
           >
-            {
+            { 
+
               Object.keys(structData).map((key, index) => (
+
                 <SwiperSlide key={index}>
                   <div>
                     <h2 style={{marginTop:'1px'}}>Slide: {index + 1} / {Object.keys(structData).length}</h2>
                     <div style={{ fontSize: 'x-large', color: 'black', display: 'flex'}} >
                       <div id='cardId'>{specificCardIds[index]}</div>
-                      <button onClick={chamaIndiceCards} id='outro' style={{marginLeft: '600px', width: '100px', height: '40px'}}>Teste</button>
-                      {chamaCards && <IndiceDeCards  structData={structData} specificCardIds={specificCardIds} />}
+                      
                     </div>
                     
                     {
@@ -176,6 +153,7 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
         <div>Tabela Cards esta oculta</div>
       )}
 
+      
       
     </div>
   );

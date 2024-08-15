@@ -14,15 +14,12 @@ import '../components/Carousel.css';
 import {updateElemento} from "../arquivosSite/utils";
 
 import BuscaInformacoes from '../components/BuscaInformacoes';
-import { returnBotao } from '../components/BuscaInformacoes';
-import Cookies from 'js-cookie';
-
 
 import ErrorBoundary from './ErrorBoundary';
 
 const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}) => {
     const[exampleData, setData] = useState([]);
-    const[value, setList] = useState([])
+    const[values, setList] = useState([])
     const[clickBotao, setIsButtonClicked] = useState(false)
 
     const[busca, setBusca] = useState(false);
@@ -33,7 +30,7 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
     // console.log("modulo renderers: ", renderers)
 
     const [pivotOptions, setPivotOptions] = useState({
-      rows: ["conta", "ação"],
+      rows: ["conta"],
       cols: ["ano"],
       aggregatorName: "Sum",
       vals: ["total_value"],
@@ -47,8 +44,6 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
 
     function handleClick(e, value, filters, pivotData) {
       e.preventDefault(); // Previne o comportamento padrão do clique
-      // console.log(pivotData)
-      // if (pivotData.rowAttrs.includes('conta') && (pivotData.rowAttrs.includes('categoria') || pivotData.rowAttrs.includes('ano')) ){
         let card_ids_list = [];
 
         // Itera sobre os registros que correspondem aos filtros e adiciona action_class e card_ids à lista
@@ -64,13 +59,10 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
 
         // Se card_ids_list é uma lista de arrays, você pode usar flat para combinar todos eles em um único array
         const combinedCardIdsList = getUniqueItems(card_ids_list.flat()) ; // Achata os arrays em um único array
+        
         setList(combinedCardIdsList)
-      // } else{
-      //   alert('Por gentileza, seja mais específico na busca para não sobrecarregar o programa e dar erro')
-      // }
-      
     }
-
+    
     const atualizarElemento = async (someById, someId, boolean) => {
         // console.log('estado botao: ', clickBotao)
         // console.log('someId: ', someId)
@@ -87,6 +79,7 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
     };
 
     useEffect(() => {
+      console.log('useEffect')
         const fetchData = async () => {
             try {
                 const accountingData = await getAccountingSummary();
@@ -100,8 +93,8 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
         fetchData();
         setIsButtonClicked(false);
         
-        // console.log('estado botao: ', clickBotao)
-    }, [clickBotao, returnBotao]);
+        console.log('estado botao: ', clickBotao)
+    }, [clickBotao]);
     
     useEffect(() => {
         if (mostrarTabela && exampleData.length > 0) {
@@ -145,10 +138,10 @@ return (
 
       <div className="right-column">
         
-        {value.length > 0 ? (
+        {values.length > 0 ? (
 
             <ErrorBoundary>
-              <Carousel mostrarCarousel={mostrarCarousel} setBusca={setBusca} style={{ display: 'inline-flex' }}  targetValue={value}/>
+              <Carousel mostrarCarousel={mostrarCarousel} setBusca={setBusca} style={{ display: 'inline-flex' }}  targetValue={values}/>
    
             </ErrorBoundary>
 
