@@ -113,6 +113,7 @@ const Teste = ({mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel}
         
         // var tabela = $.pivotUtilities;
         // console.log("tabela: ", tabela.renderers)
+        console.log('example data: ', exampleData)
     }, [exampleData, pivotOptions, mostrarTabela]);
     
     var confere = $("#output").data("pivotUIOptions")

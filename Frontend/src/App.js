@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Teste } from './PivotTable/Teste';// Ajuste o caminho conforme necessário
 
+import PivotTableComponent from './PivotTable/Teste2';
 
 const App = () => {
   const [selectedOptionMos, setSelectedOptionMos] = useState('');
@@ -47,7 +48,7 @@ const App = () => {
         <span className='highlight' > Obs: se houver erro na busca por Cards, clique novamente na tabela</span>
       </header> */}
       
-      <label>Mostrar</label>
+      {/* <label>Mostrar</label>
       <select value={selectedOptionMos} onChange={(event) => handleChange(event, true)} id="mySelectMostrar" style={{ height: '30px', width: '100px' }}>
         <option value=""></option>
         <option value="1">Tabela</option>
@@ -65,12 +66,14 @@ const App = () => {
         <option value="3">Conteúdo Json</option>
         <option value="4">Modelo Fixo</option>    
         <option value="5">Pesquisar por ID</option>     
-      </select>
+      </select>*/}
 
-      <div>
-        <Teste mostrarTabela={mostrarTabela} conteudoJson={conteudoJson} modeloJson={modeloJson} dados={dados} mostrarCarousel={mostrarCarousel} />
-      </div>
-    
+      {/* <div>
+        <Teste setMostrarTabela={setMostrarTabela} mostrarTabela={mostrarTabela} conteudoJson={conteudoJson} modeloJson={modeloJson} dados={dados} mostrarCarousel={mostrarCarousel} />
+      </div>  */}
+
+
+      <PivotTableComponent/>
 
     </div>
   );
