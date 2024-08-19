@@ -12,6 +12,7 @@ import IndiceDeCards from './IndiceDeCards';
 
 import slices from './Slices';
 
+
 const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
   const [specificCardIds, setSpecificCardIds] = useState([]);
   const [texts, setTexts] = useState({});
@@ -70,7 +71,6 @@ const Carousel = ({ targetValue, setBusca, mostrarCarousel}) => {
 
   
   // if(slices != null) {console.log("slices: ", slices)}
-  
   
   return (
     <div >

@@ -3,28 +3,46 @@ import { supabase } from '../supabaseClient';
 import { getTextAreaValue } from '../buscarDadosSql/buscaTexteArea';
 // Função para buscar dados da tabela "cardsn"
 import { fetchData } from '../fetchData';
+import { fetchUserTable } from '../Subtabelas/FetchUserTable';
+
+
 
 async function buscarElemento() {
   var userId = document.getElementById('idInput').value; // Obtém o ID do usuário
-  
-  try {
-    const json_text = await fetchData(userId);
-    // console.log(json_text);
-    if (json_text) {
-      const jsonInputElement = document.getElementById("jsonInput");
-      const modeloInputElement = document.getElementById("modeloInput");
+  console.log('uerId', userId, ' é um: ', typeof(userId))
 
-      // console.log("jsonInputElement: ", jsonInputElement)
-      if (jsonInputElement && modeloInputElement) {
-        jsonInputElement.value = json_text; // Preenche a textarea com o JSON recuperado
-        modeloInputElement.value = json_text; // Preenche a textarea original com o JSON recuperado
-      } else {
-        console.error('Elementos jsonInput ou modeloInput não encontrados.');
-      }
-    } else { console.log('Não foi possível encontrar dados para o ID:', userId); }
-  } 
+  const jsonInputElement = document.getElementById("jsonInput");
+  const modeloInputElement = document.getElementById("modeloInput");
   
-  catch (error) { console.error('Erro ao buscar dados:', error.message); }
+  
+      try {
+          const accountingData = await fetchUserTable(userId);
+          
+          
+          console.log('accountData: ', accountingData);
+      } catch (error) {
+          console.error('Erro ao buscar resumo contábil:', error);
+      }
+
+
+    try {
+      const json_text = await fetchData(userId);
+      // console.log(json_text);
+      if (json_text) {
+   
+        // console.log("jsonInputElement: ", jsonInputElement)
+        if (jsonInputElement && modeloInputElement) {
+          jsonInputElement.value = json_text; // Preenche a textarea com o JSON recuperado
+          modeloInputElement.value = json_text;
+          console.log('json_text: ', json_text) // Preenche a textarea original com o JSON recuperado
+        } else {
+          console.error('Elementos jsonInput ou modeloInput não encontrados.');
+        }
+      } else { console.log('Não foi possível encontrar dados para o ID:', userId); }
+    } 
+    
+    catch (error) { console.error('Erro ao buscar dados:', error.message); }
+ 
 }
 
 // Função para validar JSON
