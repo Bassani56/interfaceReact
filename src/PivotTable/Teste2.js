@@ -11,13 +11,12 @@ import { updateElemento, validarJson } from "../arquivosSite/utils";
 import ErrorBoundary from './ErrorBoundary';
 import { fetchUserTable } from '../Subtabelas/FetchUserTable';
 import BuscaInformacoes from '../components/BuscaInformacoes';
+import '../index.css'
 
-
-function PivotTableComponent({ mostrarTabela, conteudoJson, modeloJson, dados, mostrarCarousel }) {
+function PivotTableComponent({ renderHeader, renderNavigation}) {
     const [exampleData, setData] = useState([]);
     const [values, setList] = useState([]);
     const [clickAtualizaPagina, setIsButtonClicked] = useState(false);
-    const [busca, setBusca] = useState(false);
     const [pivotOptions, setPivotOptions] = useState({
         rows: ["conta"],
         cols: ["ano"],
@@ -48,22 +47,21 @@ function PivotTableComponent({ mostrarTabela, conteudoJson, modeloJson, dados, m
     
         const combinedCardIdsList = getUniqueItems(card_ids_list.flat()); // Achata os arrays em um único array
         
-            
         setList(combinedCardIdsList);
         
     }
 
-    
-    const atualizarElemento = async (someById, someId, boolean) => {
-        const result = await updateElemento({ ById: someById, id: someId, valor: boolean });
-        setIsButtonClicked(true);
-
-        if (result) {
-            window.alert('Atualização realizada com sucesso');
-        } else {
-            console.log('Falha na atualização');
+    useEffect(() => {
+        // Passa o botão "Voltar" para o componente pai usando a prop renderHeader
+        if (renderHeader) {
+            renderHeader(
+                
+                <button id='button-voltar' onClick={goBack} disabled={currentViewIndex <= 0}>Voltar</button>
+               
+            );
         }
-    };
+    }, [currentViewIndex]);
+
 
     const goBack = () => {
         if (currentViewIndex > 0) {
@@ -74,8 +72,8 @@ function PivotTableComponent({ mostrarTabela, conteudoJson, modeloJson, dados, m
             if (previousView && previousView.data) {
                 setCurrentViewIndex(currentViewIndex - 1); // Atualiza o índice da visualização atual
                 if(currentViewIndex - 1 == 0){setFlag(!flag)}
-                console.log('previousView: ', previousView?.data);
-                console.log('history: ', history);
+                // console.log('previousView: ', previousView?.data);
+                // console.log('history: ', history);
 
                 
                 const fetchData = async () => {
@@ -173,7 +171,7 @@ function PivotTableComponent({ mostrarTabela, conteudoJson, modeloJson, dados, m
                 
                 const newHistory = [...prevHistory.slice(0, currentViewIndex + 1), { data: values }];
                 
-                console.log('New History:', newHistory); // Adiciona log para depuração
+                // console.log('New History:', newHistory); // Adiciona log para depuração
                 return newHistory;
             });
 
@@ -186,14 +184,14 @@ function PivotTableComponent({ mostrarTabela, conteudoJson, modeloJson, dados, m
     
     useEffect(()=>{
         
-        console.log('curretView: ', currentViewIndex)
+    //     // console.log('curretView: ', currentViewIndex)
     },[history, exampleData])
 
-        console.log('curretView fora: ', currentViewIndex)
-        console.log('history save list: ', history[currentViewIndex]?.data)
+    //     // console.log('curretView fora: ', currentViewIndex)
+    //     // console.log('history save list: ', history[currentViewIndex]?.data)
         
-        console.log('history: ', history)
-        console.log('\n \n')
+    //     // console.log('history: ', history)
+    //     // console.log('\n \n')
 
     useEffect(() => {
         if (exampleData.length > 0) {
@@ -211,17 +209,18 @@ function PivotTableComponent({ mostrarTabela, conteudoJson, modeloJson, dados, m
     return (
         <div>
             <div className="container">
+                
                 <div className="left-column">
                     <div id="output" style={{ margin: '30px' }} />
-                    <button onClick={goBack} disabled={currentViewIndex <= 0}>Voltar</button>
                 </div>
-
+                
                 <div className="right-column">
                     {history && history.length > 0 && currentViewIndex > 0 && history[currentViewIndex] && history[currentViewIndex].data ? (
                         <ErrorBoundary>
                             <Carousel 
+                                setIsButtonClicked={setIsButtonClicked}
+                              
                                 mostrarCarousel={true} 
-                                setBusca={setBusca} 
                                 style={{ display: 'inline-flex' }} 
                                 targetValue={history[currentViewIndex].data || []} 
                             />
@@ -231,14 +230,6 @@ function PivotTableComponent({ mostrarTabela, conteudoJson, modeloJson, dados, m
                         <div>Busque campos válidos da tabela</div>
                     )}
 
-
-                    <button id='botaoCards' type="button" onClick={() => { 
-                        if (busca) {
-                            atualizarElemento('card', document.getElementById('cardId').textContent, true);
-                        } else {
-                            alert('Deve haver cards para atualizar');
-                        }
-                    }}>Update JSON</button>
                 </div>
 
                 

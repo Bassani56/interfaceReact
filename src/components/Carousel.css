@@ -26,30 +26,38 @@ body {
     font-weight: bold; /* Torna o texto mais espesso */
 }
 
-.container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 100%;
-}
-.left-column {
-    width: 100%;
-    height: 100%;
-    background-color: #f4f4f4;
-    padding: 10px;
-    box-sizing: border-box;
-}
-.right-column {
-    width: 100%;
-    height: 100%;
-    background-color: #e9e9e9;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
 .SyntaxHighlighter {
     white-space: pre-wrap; /* Quebra de linha no texto */
     overflow-wrap: break-word; /* Quebra de palavras longas */
     word-wrap: break-word; /* Quebra de palavras longas */
     overflow-x: hidden; /* Remove a rolagem horizontal */
 }
+
+
+#button-voltar {
+    background-color: #007BFF; /* Azul primário */
+    margin-top: 20px;
+    color: #FFFFFF; /* Branco */
+    border: 1px solid #007BFF;
+    padding: 10px 40px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  #button-voltar:hover {
+    background-color: #0056b3; /* Azul escuro para hover */
+  }
+  
+
+/* No arquivo CSS */
+.swiper-slide-fixed {
+    background-color: blueviolet;
+    width: alc(100% -c 40px); /* Ajuste a largura para incluir margem */
+    margin: 0px; /* Margem ao redor do slide */
+    box-sizing: border-box; /* Inclui padding e border no tamanho total */
+  }
+  

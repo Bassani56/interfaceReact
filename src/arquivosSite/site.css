@@ -1,23 +1,22 @@
 
 #idInput {
-  width: 72.6%;
+  width: 37%;
   height: 30px;
   background-color: rgb(63, 206, 211);
 }
 
 #buscarBotao{
-  width: 160px;
+  width: 140px;
   height: 34.2px;
   margin-top: px;
-  background-color: rgb(63, 206, 211);
+  background-color: rgb(199, 248, 250);
 }
 
 #botaoCards {
-  position: fixed;
-  top:15%; /* Ajuste a distância da parte inferior da tela */
+  top: 5px;; /* Ajuste a distância da parte inferior da tela */
   right:27%; /* Ajuste a distância da parte direita da tela */
   width: auto; /* Ajuste conforme necessário */
-  height: auto; /* Ajuste conforme necessário */
+  height: 40px; /* Ajuste conforme necessário */
   padding: 10px 20px; /* Ajuste conforme necessário */
   background-color: #007bff; /* Cor de fundo do botão */
   color: #fff; /* Cor do texto do botão */
@@ -28,15 +27,14 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Sombra para destacar o botão */
 }
 
-
 .swiper-container {
   position: relative;
 }
 
 .swiper-button-prev,
   .swiper-button-next {
-  position: fixed;
-  top: 20%; /* Ajuste conforme necessário, para ficar no centro verticalmente */
+  top: 14%;
+   /* Ajuste conforme necessário, para ficar no centro verticalmente */
   transform: translateY(-50%); /* Centraliza verticalmente */
   width: 50px; /* Ajuste conforme necessário */
   height: 50px; /* Ajuste conforme necessário */
@@ -47,24 +45,31 @@
   justify-content: center;
   cursor: pointer;
   z-index: 1000; /* Garante que os botões estejam acima de outros elementos */
-  }
+  /* Distância do lado esquerdo */
+}
 
 .swiper-button-prev {
   left: 50%; /* Ajuste conforme necessário */
+  margin-left: 210px;
 }
 
 .swiper-button-next {
-  right: 40%; /* Ajuste conforme necessário */
+  right: 28%; /* Ajuste conforme necessário */
 }
 
-
+.swiper{
+  margin-left: 0px;
+}
 
 .swiper-container {
+  margin-left: 0px;
+  background-color: #007bff;
   width: 100%; /* Ajusta a largura do contêiner do Swiper para 100% */
   overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse os limites do contêiner */
 }
 
 .swiper-slide {
+  margin-left: 10px;
   display: flex; /* Permite que o conteúdo dentro do slide se ajuste corretamente */
   flex-direction: column; /* Alinha o conteúdo verticalmente */
   overflow-wrap: break-word; /* Quebra palavras longas para ajustar o conteúdo */
